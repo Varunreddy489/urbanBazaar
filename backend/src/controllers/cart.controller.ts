@@ -7,10 +7,51 @@ import { cartItemTypes, cartTypes } from '../types/types';
 
 export const addToCart = async (req: Request, res: Response) => {
     try {
-        const { productId } = req.params
+        const userId = req.body.userId; // Assuming userId is sent in the request body
+        const productId = req.params.productId;
+        const quantity = req.body.quantity || 1; // Default quantity to 1 if not provided
 
+        // Validate the productId format
+        if (!mongoose.Types.ObjectId.isValid(productId)) {
+            return res.status(400).json({ message: 'Invalid product ID format' });
+        }
+
+        // Convert userId and productId to ObjectId
+        const userObjectId = new mongoose.Types.ObjectId(userId);
+        const productObjectId = new mongoose.Types.ObjectId(productId);
+
+        // Find the cart for the user, or create a new one if it doesn't exist
+        let cart = await cartModel.findOne({ userId: userObjectId });
+
+        if (!cart) {
+            cart = new cartModel({ userId: userObjectId, items: [], totalPrice: 0 });
+        }
+
+        // Check if the product exists in the cart
+        const product = await productModel.findById(productObjectId);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        const cartItem = cart.items.find(item => item.productId.equals(productObjectId));
+        if (cartItem) {
+            // Product exists in the cart, update the quantity
+            cartItem.quantity += quantity;
+        } else {
+            // Product does not exist in the cart, add it
+            cart.items.push({ productId: productObjectId, quantity });
+        }
+
+        // Update the total price
+        cart.totalPrice += product.price * quantity;
+
+        // Save the cart
+        await cart.save();
+
+        return res.status(200).json({ message: 'Product added to cart', cart });
     } catch (error) {
-
+        console.error(error);
+        return res.status(500).json({ message: 'Server error' });
     }
 };
 

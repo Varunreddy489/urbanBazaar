@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Cart from "./pages/Cart/Cart";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
-import Profile from "./pages/Profile/Profile";
 import SignUp from "./pages/Register/Register";
 import { useAuthContext } from "./context/AuthContext";
 
@@ -29,13 +28,7 @@ const App = () => {
           path="/cart"
           element={authUser ? <Cart /> : <Navigate to="/login" />}
         />
-
-        <Route
-          path="/profile"
-          element={authUser ? <Profile /> : <Navigate to="/login" />}
-        />
       </Routes>
-
       <Toaster />
     </div>
   );

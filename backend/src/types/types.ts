@@ -20,12 +20,12 @@ export interface productTypes {
 }
 
 export interface cartItemTypes {
-    productId: mongoose.Schema.Types.ObjectId;
+    productId: Types.ObjectId;
     quantity: number;
 }
 
-export interface cartTypes {
-    userId: mongoose.Schema.Types.ObjectId;
+export interface cartTypes extends Document {
+    userId: Types.ObjectId;
     items: cartItemTypes[];
     totalPrice: number;
 }

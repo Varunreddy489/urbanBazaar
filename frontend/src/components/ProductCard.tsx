@@ -1,6 +1,18 @@
+import toast from "react-hot-toast";
+import useAddCart from "../hooks/useAddCart";
 import { ProductTypes } from "../types/types";
 
 const ProductCard = ({ product }: { product: ProductTypes }) => {
+  const { loading, addToCart } = useAddCart();
+
+  const handleAddToCart = () => {
+    if (product._id) {
+        addToCart({ productId: product._id, quantity: "1" });  
+    } else {
+        toast.error("Product ID is missing");
+    }
+};
+
   return (
     <div className="w-80 p-4 bg-neutral-950 text-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
       <img
@@ -10,11 +22,19 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
       />
       <div className="p-4">
         <h2 className="text-xl font-semibold">{product.title}</h2>
-        <p className=" text-lg font-bold text-yellow-400 mt-2  ">{product.price} $ </p>
+        <p className=" text-lg font-bold text-yellow-400 mt-2  ">
+          {product.price} ${" "}
+        </p>
         <div className="flex justify-between items-center mt-4">
-        <p className="bg-green-500 px-1.5 py-0.5  rounded-sm text-white flex items-center gap-0.5">{product.rating} ★</p>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-            Add To Cart
+          <p className="bg-green-500 px-1.5 py-0.5  rounded-sm text-white flex items-center gap-0.5">
+            {product.rating} ★
+          </p>
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            onClick={handleAddToCart}
+            disabled={loading}
+          >
+             {loading ? "Adding..." : "Add To Cart"}
           </button>
         </div>
       </div>

@@ -1,8 +1,7 @@
 import Logout from "./Logout";
+import { Link } from "react-router-dom";
 import { CiSettings } from "react-icons/ci";
 import { FaShippingFast } from "react-icons/fa";
-import { RxAvatar } from "react-icons/rx";
-import { Link } from "react-router-dom";
 
 const data = localStorage.getItem("user");
 const userData = data ? JSON.parse(data) : null;
@@ -23,15 +22,6 @@ const Dropdown = () => {
       </div>
 
       <ul className="py-2" aria-labelledby="user-menu-button">
-        {/* PROFILE */}
-        <li className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 gap-2 dark:hover:text-white">
-          <p>
-            <RxAvatar className="w-6 h-6" />  
-          </p>
-          <Link to="/profile" className="block">
-            My Profile
-          </Link>
-        </li>
         {/* ORDERS */}
         <li className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 gap-2 dark:hover:text-white">
           <p>

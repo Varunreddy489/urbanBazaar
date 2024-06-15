@@ -31,6 +31,7 @@ export interface AuthUserTypes {
     profilePic?: string,
 }
 
-export interface CartTypes{
-    
+export interface cartTypes {
+    productId: string,
+    quantity: string,
 }

@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
-import { cartItemTypes, cartTypes } from "../types/types";
+import mongoose, { Schema, Types, Document } from 'mongoose';
+import { cartItemTypes, cartTypes } from '../types/types';
 
-const cartItemSchema = new mongoose.Schema<cartItemTypes>({
+const cartItemSchema = new Schema<cartItemTypes>({
     productId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "product",
         required: true
     },
@@ -14,9 +14,9 @@ const cartItemSchema = new mongoose.Schema<cartItemTypes>({
     }
 });
 
-const cartSchema = new mongoose.Schema<cartTypes>({
+const cartSchema = new Schema<cartTypes>({
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "user",
         required: true
     },
