@@ -2,11 +2,29 @@ export interface ProductTypes {
     _id?: string;
     title: string;
     description: string;
-    price: string;
+    price: number;
     category: string;
     image: string;
     rating: string
 }
+
+export interface CartItem {
+    productId: string;
+    quantity: number;
+    _id: string;
+  }
+  
+  export interface cartTypes {
+    _id: string;
+    userId: string;
+    items: CartItem[];
+    totalPrice: number;
+    __v: number;
+  }
+  
+  export interface CartItemWithProductDetails extends CartItem {
+    productDetails: ProductTypes;
+  }
 
 export interface RegisterData {
     name: string;
@@ -29,9 +47,4 @@ export interface AuthUserTypes {
     email: string,
     password?: string,
     profilePic?: string,
-}
-
-export interface cartTypes {
-    productId: string,
-    quantity: string,
 }
