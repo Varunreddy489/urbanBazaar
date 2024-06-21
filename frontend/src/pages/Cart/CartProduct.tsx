@@ -1,49 +1,67 @@
-import { IoAddSharp, IoRemoveOutline } from "react-icons/io5";
+import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
-import { CartItemWithProductDetails } from "../../types/types";
-import { useState } from "react";
+import { IoAddSharp, IoRemoveOutline } from "react-icons/io5";
+
 import useDeleteCart from "../../hooks/useDeleteCart";
+import { CartItemWithProductDetails } from "../../types/types";
+import useUpdateCart from "../../hooks/useUpdateCart";
 
 const CartProduct = ({
   cartItem,
+  cartId,
   onUpdate,
 }: {
   cartItem: CartItemWithProductDetails;
+  cartId: string;
   onUpdate: () => void;
 }) => {
   const { productDetails, quantity } = cartItem;
-
   const [cartQuantity, setCartQuantity] = useState(quantity);
+  const { deleteCartItem } = useDeleteCart();
+  const { updateCart } = useUpdateCart();
 
-  const { loading, deleteCartItem } = useDeleteCart();
-
-  const increaseQuantity = async () => {
-    const newQuantity = cartQuantity + 1;
-    setCartQuantity(newQuantity);
-    onUpdate();
-  };
-
-  const decreaseQuantity = async () => {
-    if (cartQuantity > 1) {
-      const newQuantity = cartQuantity - 1;
-      setCartQuantity(newQuantity);
+  const increaseQuantity = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    try {
+      await updateCart(cartItem.productId, 1);
+      setCartQuantity(cartQuantity + 1);
       onUpdate();
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const handleDelete = () => {
-    deleteCartItem(cartItem._id);
+  const decreaseQuantity = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    if (cartQuantity >= 1) {
+      try {
+        await updateCart(cartItem.productId, -1);
+        setCartQuantity(cartQuantity - 1);
+        onUpdate();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+  const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    console.log("Handle delete called with cart ID:", cartId); // Log cart ID here
+    deleteCartItem(cartId);
   };
 
   return (
-    <div className="container mx-auto mt-10">
+    <form className="container mx-auto mt-10">
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start">
         <div className="w-full p-4 bg-white shadow rounded-lg">
           <div className="flex justify-between items-center mb-6"></div>
           <div className="space-y-4">
             <div className="flex items-center bg-white border border-gray-200 rounded-lg shadow-md dark:border-gray-700 dark:bg-gray-800 transform transition-transform duration-200 hover:scale-105">
               <img
-                className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+                className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-64 md:rounded-none md:rounded-l-lg"
                 src={productDetails.image}
                 alt={productDetails.title}
               />
@@ -63,6 +81,7 @@ const CartProduct = ({
                 <div className="flex justify-between ">
                   <p className="space-x-2 text-white flex items-center">
                     <button
+                      type="button"
                       className="bg-gray-200 px-3 py-1 rounded-md focus:outline-none hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors duration-200"
                       onClick={decreaseQuantity}
                     >
@@ -72,6 +91,7 @@ const CartProduct = ({
                       Quantity: {cartQuantity}
                     </span>
                     <button
+                      type="button"
                       className="bg-gray-200 px-3 py-1 rounded-md focus:outline-none hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors duration-200"
                       onClick={increaseQuantity}
                     >
@@ -80,9 +100,9 @@ const CartProduct = ({
                   </p>
                   <div className="ml-4">
                     <button
+                      type="button"
                       className="bg-red-500 p-2 rounded-md focus:outline-none hover:bg-red-600 transition-colors duration-200"
                       onClick={handleDelete}
-                      disabled={loading}
                     >
                       <MdDelete className="text-white w-6 h-6" />
                     </button>
@@ -101,7 +121,7 @@ const CartProduct = ({
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

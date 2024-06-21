@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { useCallback, useEffect, useMemo } from "react";
 
 import CartProduct from "./CartProduct";
-import { CartItemWithProductDetails } from "../../types/types";
 import useGetCart from "../../hooks/useGetCart";
+import { CartItemWithProductDetails } from "../../types/types";
 
 const Cart = () => {
   const { loading, cartItems, getCartItems } = useGetCart();
@@ -26,11 +26,8 @@ const Cart = () => {
     getCartItems();
   }, [getCartItems]);
 
-  // Memoize total calculation to avoid unnecessary re-calculations
   const { total, groupedCartItems } = useMemo(() => {
-   
     let total = 0;
-    // Group items by productId and calculate quantities
     const groupedCartItems = cartItems.reduce((acc, cartItem) => {
       const { productId, quantity } = cartItem;
       if (!acc[productId]) {
@@ -40,7 +37,7 @@ const Cart = () => {
       }
       total += cartItem.productDetails.price * quantity;
       return acc;
-    }, {}  as GroupedCartItems);
+    }, {} as GroupedCartItems);
 
     return { total, groupedCartItems };
   }, [cartItems]);
@@ -54,7 +51,9 @@ const Cart = () => {
         <IoMdArrowRoundBack className="text-2xl mr-1" />
         Back to Home
       </button>
-      <h1 className="mb-4 text-center font-extrabold italic text-gray-900 md:text-5xl lg:text-6xl">Cart</h1>
+      <h1 className="mb-4 text-center font-extrabold italic text-gray-900 md:text-5xl lg:text-6xl">
+        Cart
+      </h1>
       <div className="mt-5 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {loading ? (
           <p>Loading...</p>
@@ -62,7 +61,12 @@ const Cart = () => {
           <div className="flex flex-col space-y-4">
             {Object.values(groupedCartItems).map(
               (cartItem: CartItemWithProductDetails) => (
-                <CartProduct key={cartItem.productId} cartItem={cartItem} onUpdate={handleUpdate}  />
+                <CartProduct
+                  key={cartItem.productId}
+                  cartItem={cartItem}
+                  cartId={cartItem._id}
+                  onUpdate={handleUpdate}
+                />
               )
             )}
             <div className=" w-full lg:ml-4 mt-6 lg:mt-0 p-4 bg-white shadow rounded-lg">

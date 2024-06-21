@@ -11,14 +11,13 @@ const useGetCart = () => {
     try {
       const response = await axios.get("http://localhost:5000/api/cart");
       const cartData = response.data;
-      console.log("Fetched cart data:", cartData);
+   
 
       const cartItemsWithDetails = await Promise.all(
         cartData.flatMap(async (cartItem: cartTypes) => {
           return Promise.all(
             cartItem.items.map(async (item) => {
               try {
-                console.log("Fetching product details for:", item.productId);
                 const productResponse = await axios.get<ProductTypes>(`http://localhost:5000/api/product/${item.productId}`);
                 return {
                   ...item,
