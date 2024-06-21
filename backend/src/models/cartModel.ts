@@ -15,11 +15,6 @@ const cartItemSchema = new Schema<cartItemTypes>({
 });
 
 const cartSchema = new Schema<cartTypes>({
-    userId: {
-        type: Schema.Types.ObjectId,
-        ref: "user",
-        required: true
-    },
     items: [cartItemSchema],
     totalPrice: {
         type: Number,

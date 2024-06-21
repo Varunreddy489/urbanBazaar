@@ -29,6 +29,7 @@ const App = () => {
           element={authUser ? <Cart /> : <Navigate to="/login" />}
         />
       </Routes>
+      {/* <Cart/> */}
       <Toaster />
     </div>
   );

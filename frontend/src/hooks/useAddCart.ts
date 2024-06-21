@@ -2,8 +2,7 @@ import axios from "axios";
 import { useState } from "react"
 import toast from "react-hot-toast";
 
-import { cartTypes } from '../types/types';
-
+import { CartItem } from '../types/types';
 
 const useAddCart = () => {
     const [loading, setLoading] = useState(false)
@@ -11,10 +10,7 @@ const useAddCart = () => {
     const addToCart = async ({
         productId,
         quantity,
-    }: cartTypes) => {
-        const success = handleInputErrors({ productId, quantity })
-
-        if (!success) return
+    }: CartItem) => {
 
         setLoading(true)
 
@@ -43,9 +39,3 @@ const useAddCart = () => {
 
 export default useAddCart
 
-function handleInputErrors({ productId, quantity }: cartTypes) {
-    if (!productId || !quantity) {
-        return false;
-    }
-    return true;
-}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
@@ -10,6 +10,10 @@ const Cart = () => {
   const { loading, cartItems, getCartItems } = useGetCart();
   const navigate = useNavigate();
 
+  interface GroupedCartItems {
+    [key: string]: CartItemWithProductDetails;
+  }
+
   const handleClick = () => {
     navigate("/");
   };
@@ -18,9 +22,13 @@ const Cart = () => {
     getCartItems();
   }, []);
 
+  const handleUpdate = useCallback(() => {
+    getCartItems();
+  }, [getCartItems]);
+
   // Memoize total calculation to avoid unnecessary re-calculations
   const { total, groupedCartItems } = useMemo(() => {
-    // Calculate total cost
+   
     let total = 0;
     // Group items by productId and calculate quantities
     const groupedCartItems = cartItems.reduce((acc, cartItem) => {
@@ -32,7 +40,7 @@ const Cart = () => {
       }
       total += cartItem.productDetails.price * quantity;
       return acc;
-    }, {});
+    }, {}  as GroupedCartItems);
 
     return { total, groupedCartItems };
   }, [cartItems]);
@@ -46,7 +54,7 @@ const Cart = () => {
         <IoMdArrowRoundBack className="text-2xl mr-1" />
         Back to Home
       </button>
-      <h1 className="text-3xl text-center font-bold text-gray-900">CART</h1>
+      <h1 className="mb-4 text-center font-extrabold italic text-gray-900 md:text-5xl lg:text-6xl">Cart</h1>
       <div className="mt-5 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {loading ? (
           <p>Loading...</p>
@@ -54,10 +62,10 @@ const Cart = () => {
           <div className="flex flex-col space-y-4">
             {Object.values(groupedCartItems).map(
               (cartItem: CartItemWithProductDetails) => (
-                <CartProduct key={cartItem.productId} cartItem={cartItem} />
+                <CartProduct key={cartItem.productId} cartItem={cartItem} onUpdate={handleUpdate}  />
               )
             )}
-            <div className="lg:w-1/4 w-full lg:ml-4 mt-6 lg:mt-0 p-4 bg-white shadow rounded-lg">
+            <div className=" w-full lg:ml-4 mt-6 lg:mt-0 p-4 bg-white shadow rounded-lg">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Summary</h2>
               <div className="space-y-2">
                 <div className="flex justify-between text-gray-700">
@@ -73,9 +81,11 @@ const Cart = () => {
                   <span>${total.toFixed(2)}</span>
                 </div>
               </div>
-              <button className="w-full mt-4 bg-cyan-800 text-white py-2 rounded-lg hover:bg-cyan-900">
-                Checkout
-              </button>
+              <div className="flex justify-center mt-4">
+                <button className="text-white w-full md:w-1/4 flex items-center justify-center text-center bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5">
+                  Buy All Products
+                </button>
+              </div>
             </div>
           </div>
         )}
