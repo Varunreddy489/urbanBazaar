@@ -84,6 +84,7 @@ export const updateCart = async (req: Request, res: Response) => {
         }
 
         cartItem.quantity += parseInt(count);
+
         if (cartItem.quantity < 0) {
             cartItem.quantity = 0;
         }

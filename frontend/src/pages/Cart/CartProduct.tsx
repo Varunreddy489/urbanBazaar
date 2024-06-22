@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { MdDelete } from "react-icons/md";
+// import { MdDelete } from "react-icons/md";
 import { IoAddSharp, IoRemoveOutline } from "react-icons/io5";
 
-import useDeleteCart from "../../hooks/useDeleteCart";
+// import useDeleteCart from "../../hooks/useDeleteCart";
 import { CartItemWithProductDetails } from "../../types/types";
 import useUpdateCart from "../../hooks/useUpdateCart";
 
 const CartProduct = ({
   cartItem,
-  cartId,
+  // cartId,
   onUpdate,
 }: {
   cartItem: CartItemWithProductDetails;
@@ -17,7 +17,7 @@ const CartProduct = ({
 }) => {
   const { productDetails, quantity } = cartItem;
   const [cartQuantity, setCartQuantity] = useState(quantity);
-  const { deleteCartItem } = useDeleteCart();
+  // const { deleteCartItem } = useDeleteCart();
   const { updateCart } = useUpdateCart();
 
   const increaseQuantity = async (
@@ -47,14 +47,14 @@ const CartProduct = ({
       }
     }
   };
-  const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    console.log("Handle delete called with cart ID:", cartId); // Log cart ID here
-    deleteCartItem(cartId);
-  };
+  // const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   event.preventDefault();
+  //   console.log("Handle delete called with cart ID:", cartId); // Log cart ID here
+  //   deleteCartItem(cartId);
+  // };
 
   return (
-    <form className="container mx-auto mt-10">
+    <form className="container mx-auto mt-10 ">
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start">
         <div className="w-full p-4 bg-white shadow rounded-lg">
           <div className="flex justify-between items-center mb-6"></div>
@@ -73,12 +73,12 @@ const CartProduct = ({
                   {productDetails.description}
                 </p>
                 <p className="font-semibold text-center text-xl text-gray-900 dark:text-white">
-                  ${productDetails.price * quantity}
+                  ${(productDetails.price * quantity).toFixed(2)}
                 </p>
                 <p className="text-sm text-center text-gray-500 dark:text-gray-400">
                   Rating: {productDetails.rating} ★
                 </p>
-                <div className="flex justify-between ">
+                <div className="flex items-center justify-center mt-4 ">
                   <p className="space-x-2 text-white flex items-center">
                     <button
                       type="button"
@@ -98,7 +98,7 @@ const CartProduct = ({
                       <IoAddSharp className="text-black" />
                     </button>
                   </p>
-                  <div className="ml-4">
+                  {/* <div className="ml-4">
                     <button
                       type="button"
                       className="bg-red-500 p-2 rounded-md focus:outline-none hover:bg-red-600 transition-colors duration-200"
@@ -106,9 +106,9 @@ const CartProduct = ({
                     >
                       <MdDelete className="text-white w-6 h-6" />
                     </button>
-                  </div>
+                  </div> */}
                 </div>
-                <div className="text-center">
+                <div className="text-center mt-3 ">
                   <button
                     type="button"
                     className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
