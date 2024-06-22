@@ -1,9 +1,13 @@
-import Sidebar from "./components/Sidebar";
+// import Sidebar from "./components/Sidebar";
+import { Toaster } from "react-hot-toast";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
     <div>
-      <Sidebar />
+      {/* <Sidebar /> */}
+      <Home />
+      <Toaster />
     </div>
   );
 };
