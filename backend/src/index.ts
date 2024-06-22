@@ -6,6 +6,7 @@ import connectToMongo from "./db/connectToMongo";
 import { userRoutes } from "./routes/user.routes";
 import { cartRoutes } from "./routes/cart.routes";
 import { productRoutes } from "./routes/product.routes";
+import { adminRoutes } from './routes/admin.routes';
 
 const app = express();
 dotenv.config()
@@ -15,9 +16,10 @@ app.use(express.json())
 
 app.use("/api/user", userRoutes)
 app.use("/api/cart", cartRoutes)
+app.use("/api/admin",adminRoutes)
 app.use("/api/product", productRoutes)
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 8000
 
 app.listen(PORT, () => {
     connectToMongo()

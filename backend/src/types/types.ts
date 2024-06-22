@@ -10,6 +10,12 @@ export interface authTypes {
     profilePic: string;
 }
 
+export interface adminAuthTypes {
+    name: string
+    email: string;
+    password: string;
+}
+
 export interface productTypes {
     title: string;
     description: string;
