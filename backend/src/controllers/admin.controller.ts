@@ -24,6 +24,7 @@ export const login = async (req: Request, res: Response) => {
 
         res.status(200).json({
             id: admin._id,
+            name: admin.name,
             email: admin.email,
         })
 

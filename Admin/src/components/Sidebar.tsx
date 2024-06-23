@@ -7,6 +7,9 @@ import { FaUserEdit, FaUserFriends } from "react-icons/fa";
 import Urbanlogo from "../.././../frontend/public/Urbanlogo.svg";
 
 const Sidebar = () => {
+  const data = localStorage.getItem("admin");
+  const adminData = data ? JSON.parse(data) : null;
+
   return (
     <aside className="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
       <a href="#" className="mx-auto">
@@ -20,10 +23,10 @@ const Sidebar = () => {
           alt="avatar"
         />
         <h4 className="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200">
-          John Doe
+         {adminData?.name}
         </h4>
         <p className="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">
-          john@example.com
+          {adminData?.email}
         </p>
       </div>
 

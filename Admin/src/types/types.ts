@@ -1,7 +1,5 @@
 export interface AdminRegisterData {
-    id?: string
     email: string;
-    name?: string;
     password: string
 }
 

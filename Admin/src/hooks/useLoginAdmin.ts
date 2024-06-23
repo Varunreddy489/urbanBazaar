@@ -2,9 +2,11 @@ import { useState } from "react"
 import toast from "react-hot-toast"
 import { AdminRegisterData } from '../types/types';
 import axios from 'axios';
+import { useAdminAuthContext } from "../context/AdminAuthContext";
 
 const useLoginAdmin = () => {
     const [loading, setLoading] = useState(false)
+    const { setAdminAuth } = useAdminAuthContext()
 
     const loginAdmin = async ({ email, password }: AdminRegisterData) => {
 
@@ -24,6 +26,9 @@ const useLoginAdmin = () => {
             if (response.data.error) {
                 throw new Error(response.data.error)
             }
+            localStorage.setItem("admin", JSON.stringify(response.data));
+            setAdminAuth(response.data)
+            console.log(response.data);
             toast.success("Admin Registration successful");
         } catch (error) {
             console.log("error in useRegister", error);

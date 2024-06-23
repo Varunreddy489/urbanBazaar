@@ -1,9 +1,11 @@
-import Login from "./Login";
+import Sidebar from "../components/Sidebar";
+import Dashboard from "./Dashboard";
 
 const Home = () => {
   return (
-    <div>
-      <Login />
+    <div className="flex" >
+     <Sidebar/>
+     <Dashboard/>
     </div>
   );
 };

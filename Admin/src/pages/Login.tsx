@@ -56,7 +56,7 @@ const Login = () => {
                 onChange={handleInputChange}
               />
               <button className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400">
-                <MdAlternateEmail className="text-3xl" />
+                <MdAlternateEmail className="text-2xl" />
               </button>
             </div>
             <div className="mb-4 relative">
@@ -74,9 +74,9 @@ const Login = () => {
                 onClick={togglePasswordVisibility}
               >
                 {showPassword ? (
-                  <FiEyeOff className="text-3xl" />
+                  <FiEyeOff className="text-2xl" />
                 ) : (
-                  <FiEye className="text-3xl" />
+                  <FiEye className="text-2xl" />
                 )}
               </button>
             </div>
