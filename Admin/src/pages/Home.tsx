@@ -1,11 +1,9 @@
-import Sidebar from "../components/Sidebar";
 import Dashboard from "./Dashboard";
 
 const Home = () => {
   return (
-    <div className="flex" >
-     <Sidebar/>
-     <Dashboard/>
+    <div className="flex">
+      <Dashboard />
     </div>
   );
 };
