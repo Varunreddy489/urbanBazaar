@@ -20,3 +20,12 @@ export interface ProductTypes {
     image: string;
     rating: string
 }
+
+export interface UserTypes {
+    _id?: string;
+    name: string;
+    username: string;
+    email: string;
+    gender?: "male" | "female";
+    profilePic?: string
+}

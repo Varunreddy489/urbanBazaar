@@ -28,12 +28,12 @@ export const login = async (req: Request, res: Response) => {
             email: admin.email,
         })
 
-        console.log("token:", token);
+        console.log("Token:", token);
 
     } catch (error: any) {
         console.error("Error in adminLogin:", error.message);
         console.log("Error in adminLogin:", error.message);
-        res.status(404).json({ error: "internal server error" })
+        res.status(500).json({ error: "internal server error" })
 
 
     }

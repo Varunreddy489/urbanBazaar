@@ -8,7 +8,7 @@ router.post('/logout', logout)
 
 router.get("/", verifyToken, getAllUsers)
 router.get("/:id", verifyToken, getUser)
-router.put("/updateUser/:id", verifyToken, updateUser)
-router.delete("/deleteUser/:id", verifyToken, deleteUser)
+router.put("/:id", verifyToken, updateUser)
+router.delete("/:id", verifyToken, deleteUser)
 
 export { router as adminRoutes }

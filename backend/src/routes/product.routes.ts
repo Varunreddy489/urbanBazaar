@@ -4,7 +4,7 @@ import { verifyToken } from "../middleware/protectedRoute"
 
 const router = Router()
 
-router.post('/addProduct', addProduct)
+router.post('/', addProduct)
 router.get('/', getAllProducts)
 router.get('/:id', getProduct)
 router.put('/:id', updateProducts)

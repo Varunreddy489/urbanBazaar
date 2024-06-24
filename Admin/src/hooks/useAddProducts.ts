@@ -26,11 +26,9 @@ const useAddProduct = () => {
         })
 
         if (!success) return;
-
         setLoading(true)
-
         try {
-            const response = await axios.post(" http://localhost:5000/api/product/addProduct", {
+            const response = await axios.post(" http://localhost:5000/api/product/", {
                 title,
                 description,
                 price,
@@ -38,13 +36,10 @@ const useAddProduct = () => {
                 image,
                 rating,
             })
-
             if (response.data.error) {
                 throw new Error(response.data.error)
             }
-
             console.log(response.data);
-
             toast.success("Product Added successfully");
         } catch (error) {
             console.log("error in useAddProduct", error);
