@@ -24,6 +24,7 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
         <h2 className="text-xl font-semibold">{product.title}</h2>
         <p className=" text-lg font-bold text-yellow-400 mt-2  ">
           {product.price} ${" "}
+          {product.}
         </p>
         <div className="flex justify-between items-center mt-4">
           <p className="bg-green-500 px-1.5 py-0.5  rounded-sm text-white flex items-center gap-0.5">

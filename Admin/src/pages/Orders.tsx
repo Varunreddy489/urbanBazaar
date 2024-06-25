@@ -1,10 +1,5 @@
-
 const Orders = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <div className="bg-black h-screen text-white"></div>;
+};
 
-export default Orders
+export default Orders;

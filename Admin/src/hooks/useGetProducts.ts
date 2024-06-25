@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
+
 import { ProductTypes } from "../types/types";
 
 
@@ -13,7 +14,9 @@ const useGetProducts = () => {
         setLoading(true);
         try {
             const response = await axios.get("http://localhost:5000/api/product");
+            // const response = await axios.get('https://fake-store-api.mock.beeceptor.com/api/products');
             setProducts(response.data);
+            console.log(response.data);
         } catch (error) {
             console.error("Error fetching products:", error);
             toast.error("Error occurred while fetching products.");

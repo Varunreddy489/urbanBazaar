@@ -2,7 +2,7 @@ import { MdDashboard } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
 import { TbTruckDelivery } from "react-icons/tb";
 import { CiDeliveryTruck, CiLogout } from "react-icons/ci";
-import { FaUserEdit, FaUserFriends } from "react-icons/fa";
+import {  FaUserFriends } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import useLogoutAdmin from "../hooks/useLogoutAdmin";
@@ -29,7 +29,7 @@ const Sidebar = () => {
         <h4 className="mx-2 mt-2 font-medium text-center text-gray-800 dark:text-gray-200">
           {adminData?.name}
         </h4>
-        <p className="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">
+        <p className="mwx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">
           {adminData?.email}
         </p>
       </div>
@@ -73,13 +73,13 @@ const Sidebar = () => {
           </Link>
 
           {/* Profile */}
-          <Link
+          {/* <Link
             className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
             to="/profile"
           >
             <FaUserEdit />
             <span className="mx-4 font-medium">Profile</span>
-          </Link>
+          </Link> */}
 
           {/* Orders */}
           <Link

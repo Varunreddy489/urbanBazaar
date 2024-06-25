@@ -1,23 +1,52 @@
 import { ProductTypes } from "../types/types";
+import { BsStarFill } from "react-icons/bs";
 
 const ProductCard = ({ product }: { product: ProductTypes }) => {
+  const availabilityText = product.availability ? "In Stock" : "Out of Stock";
+  const availabilityClass = product.availability
+    ? "text-green-500"
+    : "text-red-500";
+
+  const renderStars = (rating: number) => {
+    const stars = [];
+    for (let i = 0; i < rating; i++) {
+      stars.push(<BsStarFill key={i} className="text-white" />);
+    }
+    return stars;
+  };
+
   return (
-    <div className="w-80 p-4 bg-neutral-950 text-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
+    <div className="w-84 p-4 m-2 bg-gray-800 text-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
       <img
-        className="w-full h-40 object-cover rounded-t-lg"
+        className="w-full h-44 object-cover rounded-lg"
         alt={product.title}
         src={product.image}
       />
       <div className="p-4">
-        <h2 className="text-xl font-semibold">{product.title}</h2>
-        <p className=" text-lg font-bold text-yellow-400 mt-2  ">
-          {product.price} ${" "}
+        <h2 className="text-xl font-semibold mb-2">{product.title}</h2>
+        <p>{}</p>
+        <p className="text-sm text-gray-400 mb-2">{product.brand}</p>
+
+        <div className="flex space-x-2 items-center ">
+          <p className="text-lg font-bold text-yellow-400 mr-2">
+            ${product.discountedPrice.toFixed(2)}
+          </p>
+          <p className="text-sm text-gray-400 line-through">
+            ${product.originalPrice.toFixed(2)}
+          </p>
+        </div>
+        <p className=" text-gray-300">({product.discount}% off)</p>
+        <p className="mt-2 text-gray-400 mb-2">Category: {product.category}</p>
+        <p className={`text-sm mb-2 ${availabilityClass}`}>
+          {availabilityText}
         </p>
         <div className="flex justify-between items-center mt-4">
-          <p className="bg-green-500 px-1.5 py-0.5  rounded-sm text-white flex items-center gap-0.5">
-            {product.rating} ★
-          </p>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"></button>
+          <div className="flex items-center">
+            <p className="bg-green-500 px-2 py-1 rounded text-white flex items-center gap-1">
+              {product.rating} {renderStars(product.rating)}
+            </p>
+            <p className="ml-2  text-gray-300">{product.dimensions}</p>
+          </div>
         </div>
       </div>
     </div>

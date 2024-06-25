@@ -8,6 +8,7 @@ export interface authTypes {
     confirmPassword: string;
     gender: 'male' | 'female';
     profilePic: string;
+    orders: number;
 }
 
 export interface adminAuthTypes {
@@ -19,11 +20,18 @@ export interface adminAuthTypes {
 export interface productTypes {
     title: string;
     description: string;
-    price: number;
+    originalPrice: number;
+    discount: number;
+    discountedPrice: number;
     category: string;
-    imageUrl: string;
-    rating: number
+    image: string;
+    rating: number;
+    availability: boolean;
+    brand: string;
+    dimensions: string;
+    quantity: number;
 }
+
 
 export interface cartItemTypes {
     productId: Types.ObjectId;

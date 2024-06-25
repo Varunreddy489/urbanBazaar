@@ -12,13 +12,18 @@ export interface AdminAuthTypes {
 }
 
 export interface ProductTypes {
-    _id?: string;
+    _id?: string
     title: string;
     description: string;
-    price: string;
+    originalPrice: number;
+    discount: number;
+    discountedPrice: number;
     category: string;
     image: string;
-    rating: string
+    rating: number;
+    availability: boolean;
+    brand: string;
+    dimensions: string;
 }
 
 export interface UserTypes {

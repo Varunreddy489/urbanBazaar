@@ -31,7 +31,11 @@ const authSchema = new mongoose.Schema<authTypes>({
         type: String,
         required: true
 
-    }
-})
+    },
+    orders:{
+    type: Number,
+    default: 0
+},
+}, { timestamps: true })
 
 export const authModel = mongoose.model<authTypes>("auth", authSchema)
