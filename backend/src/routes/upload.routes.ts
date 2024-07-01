@@ -1,44 +1,50 @@
-import express, { Request, Response } from 'express';
-import multer, { FileFilterCallback } from 'multer';
-import path from 'path';
+import path from "path";
+import multer from "multer";
+import { Router } from "express";
+import { authModel } from "../models/authModel";
 
-const router = express.Router();
+const router = Router();
 
-// Configure Multer storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/');
+        cb(null, "public/Images");
     },
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
+        cb(
+            null,
+            file.fieldname + "_" + Date.now() + path.extname(file.originalname)
+        );
     },
 });
 
-// Optional: Add file filter to restrict file types
-const fileFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
-    // Accept image files only
-    if (file.mimetype.startsWith('image/')) {
-        cb(null, true);
-    } else {
-        cb(new Error('Not an image! Please upload an image.') as any, false);
+const upload = multer({ storage: storage });
+
+router.put("/", upload.single("file"), async (req, res) => {
+    try {
+        const userId = req.body.userId; 
+        const fileUrl = req.file ? `/public/Images/${req.file.filename}` : null;
+
+        if (!userId || !fileUrl) {
+            return res.status(400).json({ message: "Invalid request data" });
+        }
+
+        const updatedUser = await authModel.findByIdAndUpdate(
+            userId,
+            { profilePic: fileUrl },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ message: "Profile picture updated successfully", user: updatedUser });
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+        console.log("error in uppload", error);
     }
-};
-
-// Initialize Multer with storage and file filter
-const upload = multer({ storage, fileFilter });
-
-// Handle file upload
-router.post('/', upload.single('file'), (req: Request, res: Response) => {
-    if (!req.file) {
-        return res.status(400).send('No file uploaded.');
-    }
-
-    const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-    res.send({ url: fileUrl });
 });
 
-// Serve uploaded files
-router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 
 export { router as uploadRoutes };
-    
