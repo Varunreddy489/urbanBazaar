@@ -34,14 +34,14 @@
 //   const handleAddProduct = async () => {
 //     await addProducts(inputs);
 //     toast.success("Your Product Added Successfully");
-//     // setInputs({
-//     //   title: "",
-//     //   description: "",
-//     //   price: "",
-//     //   category: "",
-//     //   imageUrl: "",
-//     //   rating: "",
-//     // });
+    // setInputs({
+    //   title: "",
+    //   description: "",
+    //   price: "",
+    //   category: "",
+    //   imageUrl: "",
+    //   rating: "",
+    // });
 //   };
 
 //   return (

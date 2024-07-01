@@ -1,12 +1,18 @@
 export interface ProductTypes {
-    _id?: string;
-    title: string;
-    description: string;
-    price: string;
-    category: string;
-    image: string;
-    rating: string
+  _id?: string
+  title: string;
+  description: string;
+  originalPrice: number;
+  discount: number;
+  discountedPrice: number;
+  category: string;
+  image: string;
+  rating: number;
+  availability: boolean;
+  brand: string;
+  dimensions: string;
 }
+
 
 export interface CartItem {
     productId: string;

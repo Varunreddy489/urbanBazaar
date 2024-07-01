@@ -33,7 +33,7 @@ const Usercard = ({ user }: { user: UserTypes }) => {
           {/* Additional Features */}
           <div className="mt-2 flex items-center justify-between">
             <span className="text-sm text-gray-500">
-              Joined: {new Date(user.createdAt).toLocaleDateString()}
+              {/* Joined: {new Date(user.createdAt).toLocaleDateString()} */}
             </span>
           </div>
         </div>

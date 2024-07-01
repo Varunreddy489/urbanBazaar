@@ -35,7 +35,7 @@ const Cart = () => {
       } else {
         acc[productId].quantity += quantity;
       }
-      total += cartItem.productDetails.price * quantity;
+      total += cartItem.productDetails.discountedPrice * quantity;
       return acc;
     }, {} as GroupedCartItems);
 

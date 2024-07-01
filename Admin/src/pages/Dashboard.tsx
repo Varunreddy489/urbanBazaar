@@ -32,8 +32,7 @@ const Dashboard = () => {
           <h1 className="mb-3 text-5xl font-normal text-gray-500 dark:text-gray-400">
             User count
           </h1>
-        </div>  
-
+        </div>
       </div>
     </div>
   );

@@ -73,7 +73,7 @@ const CartProduct = ({
                   {productDetails.description}
                 </p>
                 <p className="font-semibold text-center text-xl text-gray-900 dark:text-white">
-                  ${(productDetails.price * quantity).toFixed(2)}
+                  ${(productDetails.discountedPrice * quantity).toFixed(2)}
                 </p>
                 <p className="text-sm text-center text-gray-500 dark:text-gray-400">
                   Rating: {productDetails.rating} ★
@@ -98,15 +98,7 @@ const CartProduct = ({
                       <IoAddSharp className="text-black" />
                     </button>
                   </p>
-                  {/* <div className="ml-4">
-                    <button
-                      type="button"
-                      className="bg-red-500 p-2 rounded-md focus:outline-none hover:bg-red-600 transition-colors duration-200"
-                      onClick={handleDelete}
-                    >
-                      <MdDelete className="text-white w-6 h-6" />
-                    </button>
-                  </div> */}
+                 
                 </div>
                 <div className="text-center mt-3 ">
                   <button

@@ -1,17 +1,18 @@
 import { Toaster } from "react-hot-toast";
-import { Routes, Route, Navigate } from "react-router-dom";
+// import { Routes, Route, Navigate } from "react-router-dom";
 
-import Cart from "./pages/Cart/Cart";
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
-import SignUp from "./pages/Register/Register";
-import { useAuthContext } from "./context/AuthContext";
+// import Cart from "./pages/Cart/Cart";
+// import Home from "./pages/Home/Home";
+// import Login from "./pages/Login/Login";
+// import SignUp from "./pages/Register/Register";
+// import { useAuthContext } from "./context/AuthContext";
+import Profile from "./pages/Profile";
 
 const App = () => {
-  const { authUser } = useAuthContext();
+  // const { authUser } = useAuthContext();
   return (
     <div className="">
-      <Routes>
+      {/* <Routes>
         <Route
           path="/"
           element={authUser ? <Home /> : <Navigate to={"/login"} />}
@@ -28,8 +29,12 @@ const App = () => {
           path="/cart"
           element={authUser ? <Cart /> : <Navigate to="/login" />}
         />
-      </Routes>
-      
+        <Route
+          path="/profile"
+          element={authUser ? <Profile /> : <Navigate to="/login" />}
+        />
+      </Routes> */}
+<Profile/>
       <Toaster />
     </div>
   );

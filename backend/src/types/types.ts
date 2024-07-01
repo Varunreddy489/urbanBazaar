@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, Types } from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 
 export interface authTypes {
     name: string;
@@ -9,6 +9,7 @@ export interface authTypes {
     gender: 'male' | 'female';
     profilePic: string;
     orders: number;
+    address: string;
 }
 
 export interface adminAuthTypes {
@@ -20,7 +21,7 @@ export interface adminAuthTypes {
 export interface productTypes {
     title: string;
     description: string;
-    originalPrice: number;
+    price: number;
     discount: number;
     discountedPrice: number;
     category: string;
@@ -42,4 +43,14 @@ export interface cartTypes extends Document {
     userId: Types.ObjectId;
     items: cartItemTypes[];
     totalPrice: number;
+}
+
+export interface orderTypes {
+    userId: Types.ObjectId;
+    items: cartItemTypes[];
+    totalPrice: number;
+    address: string;
+    paymentMethod: string;
+    status: string;
+    date: Date;
 }

@@ -33,4 +33,5 @@ export interface UserTypes {
     email: string;
     gender?: "male" | "female";
     profilePic?: string
+    // createdAt?: Date
 }

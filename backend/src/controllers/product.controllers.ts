@@ -4,27 +4,28 @@ import { productTypes } from "../types/types";
 
 export const addProduct = async (req: Request<any, any, productTypes>, res: Response) => {
     try {
-        const { title, description, originalPrice, category, image, rating } = req.body
+        const { title, description, price, category, image,discount, rating } = req.body
 
         const existingProduct = await productModel.findOne({ title });
         if (existingProduct) {
             return res.status(400).json({ error: "Product with this title already exists" });
         }
 
-        if (!title || !description || !originalPrice || !category || !image || !rating) {
+        if (!title || !description || !price || !category || !image || !rating) {
             return res.status(500).json({ error: "fill put all the fields" })
         }
 
-        if (typeof originalPrice !== 'number' || typeof rating !== 'number') {
-            return res.status(400).json({ error: "Invalid data type for originalPrice or rating" });
+        if (typeof price !== 'number' || typeof rating !== 'number') {
+            return res.status(400).json({ error: "Invalid data type for price or rating" });
         }
 
         const newProduct = {
             title,
             description,
-            originalPrice,
+            price,
             category,
             image,
+            discount,
             rating,
         }
         const product = await productModel.create(newProduct);
@@ -66,7 +67,7 @@ export const updateProducts = async (req: Request<any, any, productTypes>, res: 
     try {
         const { id } = req.params
 
-        const { title, description, originalPrice, category, image, rating } = req.body
+        const { title, description, price, category, image, rating } = req.body
         const product = await productModel.findByIdAndUpdate(id, req.body)
 
         if (!product) {

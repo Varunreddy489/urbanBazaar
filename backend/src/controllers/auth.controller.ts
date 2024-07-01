@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs';
 
 export const register = async (req: Request<any, any, authTypes>, res: Response) => {
     try {
-        const { name, username, email, password, confirmPassword, gender } = req.body
+        const { name, username, email, password, confirmPassword, gender,profilePic } = req.body
 
         if (password != confirmPassword) {
             return res.status(400).json({ error: "Passwords do not match" })
@@ -32,7 +32,7 @@ export const register = async (req: Request<any, any, authTypes>, res: Response)
             password: hashedPassword,
             confirmPassword,
             gender,
-            profilePic: gender === "male" ? boyProfilePic : girlProfilePic,
+            profilePic: profilePic || gender === "male" ? boyProfilePic : girlProfilePic,
         })
 
         await newUser.save()
