@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useCallback, useEffect, useMemo } from "react";
 
-import CartProduct from "./CartProduct";
+import CartProduct from "./CartCard";
 import useGetCart from "../../hooks/useGetCart";
 import { CartItemWithProductDetails } from "../../types/types";
 

@@ -18,7 +18,7 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
     ? "text-green-500"
     : "text-red-500";
 
-  const priceDiffernce = product.originalPrice - product.discountedPrice;
+  const priceDiffernce = product.price - product.discountedPrice;
 
   return (
     <div className="w-80 p-4 bg-neutral-950 text-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
@@ -37,7 +37,7 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
             <p>({product.discount}% off)</p>
           </div>
           <p className="line-through text-slate-500">
-            ${product.originalPrice.toFixed(2)}
+            ${product.price.toFixed(2)}
           </p>
         </div>
         <div className=" flex mt-2 justify-between text-center ">

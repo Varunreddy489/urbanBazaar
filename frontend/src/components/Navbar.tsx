@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TiShoppingCart } from "react-icons/ti";
 
 import Dropdown from "./Dropdown";
-import Urbanlogo from "../../public/Urbanlogo.svg";
+import Urbanlogo from "/Urbanlogo.svg";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

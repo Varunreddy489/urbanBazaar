@@ -18,10 +18,6 @@ const authSchema = new mongoose.Schema<authTypes>({
         type: String,
         required: true
     },
-    confirmPassword: {
-        type: String,
-        required: true
-    },
     gender: {
         type: String,
         enum: ['male', 'female'],
@@ -30,14 +26,7 @@ const authSchema = new mongoose.Schema<authTypes>({
     profilePic: {
         type: String,
         required: true
-    },
-    orders: {
-        type: Number,
-        default: 0
-    },
-    address: {
-        type: String
     }
-}, { timestamps: true })
+}, { timestamps: true });
 
-export const authModel = mongoose.model<authTypes>("auth", authSchema)
+export const authModel = mongoose.model<authTypes>("auth", authSchema);

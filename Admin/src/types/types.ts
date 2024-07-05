@@ -15,7 +15,7 @@ export interface ProductTypes {
     _id?: string
     title: string;
     description: string;
-    originalPrice: number;
+    price: number;
     discount: number;
     discountedPrice: number;
     category: string;

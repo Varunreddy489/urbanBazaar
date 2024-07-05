@@ -30,7 +30,6 @@ export const register = async (req: Request<any, any, authTypes>, res: Response)
             username,
             email,
             password: hashedPassword,
-            confirmPassword,
             gender,
             profilePic: profilePic || gender === "male" ? boyProfilePic : girlProfilePic,
         })

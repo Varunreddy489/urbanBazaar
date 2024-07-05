@@ -15,6 +15,11 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
     return stars;
   };
 
+  const discountedPrice = product.discountedPrice
+    ? product.discountedPrice.toFixed(2)
+    : "";
+  const price = product.price ? product.price.toFixed(2) : "";
+
   return (
     <div className="w-84 p-4 m-2 bg-gray-800 text-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
       <img
@@ -29,11 +34,9 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
 
         <div className="flex space-x-2 items-center ">
           <p className="text-lg font-bold text-yellow-400 mr-2">
-            ${product.discountedPrice.toFixed(2)}
+            {discountedPrice}
           </p>
-          <p className="text-sm text-gray-400 line-through">
-            ${product.originalPrice.toFixed(2)}
-          </p>
+          <p className="text-sm text-gray-400 line-through">{price}</p>
         </div>
         <p className=" text-gray-300">({product.discount}% off)</p>
         <p className="mt-2 text-gray-400 mb-2">Category: {product.category}</p>

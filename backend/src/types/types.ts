@@ -8,8 +8,14 @@ export interface authTypes {
     confirmPassword: string;
     gender: 'male' | 'female';
     profilePic: string;
-    orders: number;
-    address: string;
+}
+
+export interface addressTypes {
+    streetName: string;
+    pincode: number;
+    localityName: string;
+    city: string;
+    state: string;
 }
 
 export interface adminAuthTypes {
@@ -46,11 +52,17 @@ export interface cartTypes extends Document {
 }
 
 export interface orderTypes {
+    productId: Types.ObjectId;
     userId: Types.ObjectId;
-    items: cartItemTypes[];
-    totalPrice: number;
-    address: string;
-    paymentMethod: string;
+    userAddress: {
+        streetName: string;
+        pincode: number;
+        localityName: string;
+        city: string;
+        state: string;
+    };
+    quantity: number;
     status: string;
+    totalPrice: number;
     date: Date;
 }
