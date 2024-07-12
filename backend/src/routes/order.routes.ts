@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { addOrder, getOrders } from "../controllers/order.controller";
+import { addOrder, getAllOrders, getOrdersByUserId  } from "../controllers/order.controller";
 
 const router = Router()
 
 router.post('/', addOrder)
-router.get('/', getOrders)
+router.get('/user/:userId', getOrdersByUserId);
+router.get('/admin', getAllOrders)
 
 export { router as orderRoutes }

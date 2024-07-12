@@ -7,6 +7,7 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/Register/Register";
 import { useAuthContext } from "./context/AuthContext";
+import Orders from "./pages/Orders";
 
 const App = () => {
   const { authUser } = useAuthContext();
@@ -32,6 +33,10 @@ const App = () => {
         <Route
           path="/profile"
           element={authUser ? <Profile /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/orders"
+          element={authUser ? <Orders /> : <Navigate to="/login" />}
         />
       </Routes>
       <Toaster />

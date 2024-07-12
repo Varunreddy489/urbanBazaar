@@ -1,50 +1,44 @@
-import { useState } from "react";
-import axios from "axios";
-import { cartTypes, ProductTypes, CartItemWithProductDetails } from "../types/types";
+import axios from "axios"
+import { useState } from "react"
+import toast from "react-hot-toast";
+import { CartItem } from "../types/types";
 
 const useGetCart = () => {
-  const [loading, setLoading] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItemWithProductDetails[]>([]);
 
-  const getCartItems = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get("http://localhost:5000/api/cart");
-      const cartData = response.data;
-   
+    const URL = import.meta.env.VITE_BACKEND_URL;
 
-      const cartItemsWithDetails = await Promise.all(
-        cartData.flatMap(async (cartItem: cartTypes) => {
-          return Promise.all(
-            cartItem.items.map(async (item) => {
-              try {
-                const productResponse = await axios.get<ProductTypes>(`http://localhost:5000/api/product/${item.productId}`);
-                return {
-                  ...item,
-                  productDetails: productResponse.data,
-                };
-              } catch (error: any) {
-                if (error.response && error.response.status === 404) {
-                  console.error(`Product not found: ${item.productId}`);
-                  return null;
-                } else {
-                  throw error;
-                }
-              }
-            })
-          );
-        })
-      );
+    const [loading, setLoading] = useState(false)
+    const [cartitems, setCartItems] = useState<CartItem[]>([])
 
-      setCartItems(cartItemsWithDetails.flat().filter(item => item !== null));
-    } catch (error) {
-      console.error("Error fetching cart items", error);
-    } finally {
-      setLoading(false);
+    const userData = localStorage.getItem("user");
+    const user = JSON.parse(userData || '{}');
+
+    const userId = user._id;
+
+    if (!userId) {
+        console.error("User ID is missing");
+        return;
     }
-  };
 
-  return { loading, cartItems, getCartItems };
-};
+    const getCartItems = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get(`${URL}/cart/${userId}`)
+            if (response.data && response.data.cartItems) {
+                console.log(response.data);
+                setCartItems(response.data.cartItems);
+                toast.success("Cart items fetched successfully!");
+            } else {
+                toast.error("Failed to fetch cart items.");
+            }
+            toast.success("Cart items fetched successfully!");
+        } catch (error) {
+            console.log("Error in useGetcart:", error);
+        } finally {
+            setLoading(false)
+        }
+    }
+    return { loading, cartitems, getCartItems }
+}
 
-export default useGetCart;
+export default useGetCart

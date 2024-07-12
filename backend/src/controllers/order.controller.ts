@@ -1,13 +1,15 @@
 import { Request, Response } from "express";
+
 import { authModel } from "../models/authModel";
-import { productModel } from "../models/productModel";
 import { orderModel } from "../models/orderModel";
+import { addressModel } from "../models/addressModel";
+import { productModel } from "../models/productModel";
 
 export const addOrder = async (req: Request, res: Response) => {
     try {
-        const { productId, userId, userAddress, quantity } = req.body;
+        const { productId, userId, address, quantity } = req.body;
 
-        if (!productId || !userId || !userAddress) {
+        if (!productId || !userId || !address) {
             return res.status(400).json({ message: "All fields are required" });
         }
 
@@ -22,13 +24,17 @@ export const addOrder = async (req: Request, res: Response) => {
             return res.status(402).json({ message: "Invalid product or user" });
         }
 
+        const isAddress = await addressModel.findOne(address)
+
+        if (!isAddress) return res.status(400).send("Invalid address")
+
         const totalPrice = product.price * quantity;
         const status = req.body.status || 'pending';
 
         const newOrder = new orderModel({
             productId,
             userId,
-            userAddress,
+            address,
             quantity,
             status,
             totalPrice
@@ -43,7 +49,7 @@ export const addOrder = async (req: Request, res: Response) => {
     }
 }
 
-export const getOrders = async (req: Request, res: Response) => {
+export const getAllOrders = async (req: Request, res: Response) => {
     try {
         const orders = await orderModel.find({}).populate("productId").populate("userId")
         return res.status(200).json({ orders })
@@ -53,14 +59,47 @@ export const getOrders = async (req: Request, res: Response) => {
     }
 }
 
-export const getOrderById = async (req: Request, res: Response) => {
+export const getOrdersByUserId = async (req: Request, res: Response) => {
     try {
-        const orderId = req.params.id
-        const order = await orderModel.findById(orderId).populate("productId").populate("userId")
-        return res.status(200).json({ order })
+        const { userId } = req.params
+
+        const orders = await orderModel.find({ userId }).populate("productId")
+
+        if (!orders) {
+            return res.status(404).json({ message: "No orders found for this user" })
+        }
+
+        return res.status(200).json({ orders })
 
     } catch (error) {
         console.log("Error in getOrderById:", error);
         return res.status(500).json({ message: "Internal server error" })
     }
 }
+
+export const addAddress = async (req: Request, res: Response) => {
+    try {
+        const { userId, streetName, pincode, localityName, city, state } = req.body;
+
+        const isUser = await authModel.findById(userId);
+
+        if (!isUser) {
+            return res.status(400).send("Invalid user");
+        }
+
+        const newAddress = new addressModel({
+            userId,
+            streetName,
+            pincode,
+            localityName,
+            city,
+            state,
+        });
+
+        await newAddress.save();
+        return res.status(201).json({ message: "Address added successfully" });
+    } catch (error) {
+        console.error("Error in addAddress:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};

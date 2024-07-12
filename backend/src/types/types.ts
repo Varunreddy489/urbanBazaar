@@ -11,6 +11,7 @@ export interface authTypes {
 }
 
 export interface addressTypes {
+    userId: Types.ObjectId
     streetName: string;
     pincode: number;
     localityName: string;
@@ -54,7 +55,7 @@ export interface cartTypes extends Document {
 export interface orderTypes {
     productId: Types.ObjectId;
     userId: Types.ObjectId;
-    userAddress: {
+    address: {
         streetName: string;
         pincode: number;
         localityName: string;

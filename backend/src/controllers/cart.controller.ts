@@ -2,25 +2,30 @@ import mongoose from 'mongoose';
 import { Request, Response } from 'express';
 
 import { cartModel } from '../models/cartModel';
+import { authModel } from '../models/authModel';
 import { productModel } from '../models/productModel';
 import { cartItemTypes, cartTypes } from '../types/types';
 
 export const addToCart = async (req: Request, res: Response) => {
     try {
-
-        const productId = req.params.productId;
+        const { productId, userId } = req.params;
         const quantity = parseInt(req.body.quantity) || 1;
 
         if (!mongoose.Types.ObjectId.isValid(productId)) {
             return res.status(400).json({ message: 'Invalid product ID format' });
         }
 
-        const productObjectId = new mongoose.Types.ObjectId(productId);
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: 'Invalid user ID format' });
+        }
 
-        let cart = await cartModel.findOne();
+        const productObjectId = new mongoose.Types.ObjectId(productId);
+        const userObjectId = new mongoose.Types.ObjectId(userId);
+
+        let cart = await cartModel.findOne({ userId });
 
         if (!cart) {
-            cart = new cartModel({ items: [], totalPrice: 0 });
+            cart = new cartModel({ userId, items: [] });
         }
 
         const product = await productModel.findById(productObjectId);
@@ -35,11 +40,9 @@ export const addToCart = async (req: Request, res: Response) => {
             cart.items.push({ productId: productObjectId, quantity });
         }
 
-        cart.totalPrice += product.discountedPrice * quantity;
-
         await cart.save();
 
-        return res.status(200).json({ message: 'Product added to cart', cart });
+        return res.status(200).json({ cart });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Server error' });
@@ -48,14 +51,15 @@ export const addToCart = async (req: Request, res: Response) => {
 
 export const getCartProducts = async (req: Request, res: Response) => {
     try {
-        const carts: cartTypes[] = await cartModel.find({});
+        const carts: cartTypes[] = await cartModel.find({}).populate({
+            path: 'items.productId',
+            model: 'product'
+        });
 
         const filteredProducts = carts.map((cart: cartTypes) => ({
             ...cart.toObject(),
             items: cart.items.filter((item: cartItemTypes) => item.quantity > 0)
         }));
-
-        console.log("Filtered Products:", filteredProducts);
 
         return res.status(200).json(filteredProducts);
     } catch (error) {
@@ -64,33 +68,60 @@ export const getCartProducts = async (req: Request, res: Response) => {
     }
 };
 
+export const getCartByUserId = async (req: Request, res: Response) => {
+    try {
+        const userId = req.params.userId
+
+        const isUser = await authModel.findById(userId)
+
+        if (!isUser) return res.status(404).json({ error: "User not found" })
+
+        const cartItems = await cartModel.findOne({ userId }).populate({
+            path: 'items.productId',
+            model: 'product'
+        })
+
+        return res.status(200).json({ cartItems });
+
+    } catch (error) {
+        console.log("erorr in getCartProductsByUserId:", error);
+        return res.status(500).json({ error: "Internal Server Error" })
+    }
+}
+
 export const updateCart = async (req: Request, res: Response) => {
     try {
-        const { productId } = req.params;
-        const { count } = req.body;
+        const { userId, productId } = req.params;
+        const quantity = parseInt(req.body.quantity);
+
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: "Invalid userId" });
+        }
 
         if (!mongoose.Types.ObjectId.isValid(productId)) {
             return res.status(400).json({ error: "Invalid productId" });
         }
 
-        const cart = await cartModel.findOne();
+        const userObjectId = new mongoose.Types.ObjectId(userId);
+        const productObjectId = new mongoose.Types.ObjectId(productId);
+
+        const cart = await cartModel.findOne({ userId });
+
         if (!cart) {
             return res.status(404).json({ error: "Cart not found" });
         }
 
-        const cartItem = cart.items.find(item => item.productId.toString() === productId);
+        const cartItem = cart.items.find(item => item.productId.equals(productObjectId));
+
         if (!cartItem) {
             return res.status(404).json({ error: "Product not found in cart" });
         }
 
-        cartItem.quantity += parseInt(count);
-
-        if (cartItem.quantity < 0) {
-            cartItem.quantity = 0;
-        }
+        cartItem.quantity = Math.max(cartItem.quantity + quantity, 0);
 
         await cart.save();
-        return res.status(200).json(cart);
+
+        return res.status(200).json({ cart });
 
     } catch (error) {
         console.log("error in updateCart", error);

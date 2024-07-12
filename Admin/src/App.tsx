@@ -41,6 +41,7 @@ const App = () => {
           />
           <Route path="/orders" element={adminAuth ? <Orders /> : <Login />} />
         </Routes>
+
         <Toaster />
       </div>
     </div>

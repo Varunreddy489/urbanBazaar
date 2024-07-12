@@ -2,13 +2,15 @@ import mongoose from "mongoose";
 import { addressTypes } from "../types/types";
 
 const addressSchema = new mongoose.Schema<addressTypes>({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+    },
     streetName: {
         type: String,
         required: false
     },
     pincode: {
         type: Number,
-
     },
     localityName: {
         type: String,

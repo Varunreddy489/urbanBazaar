@@ -41,7 +41,6 @@ const useRegister = () => {
                     confirmPassword,
                     gender
                 });
-            console.log(response.data);
             localStorage.setItem("user", JSON.stringify(response.data));
             setAuthUser(response.data);
 
@@ -49,7 +48,7 @@ const useRegister = () => {
                 throw new Error(response.data.error)
             }
             toast.success("Registration successful");
-            
+
         } catch (error) {
             console.log("error in useRegister", error);
             if (axios.isAxiosError(error) && error.response && error.response.data) {

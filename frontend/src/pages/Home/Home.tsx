@@ -3,7 +3,7 @@ import Products from "./Products";
 
 const Home = () => {
   return (
-    <div className="">
+    <div className="bg-slate-900">
       <Navbar />
       <Products />
     </div>

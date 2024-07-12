@@ -12,7 +12,7 @@ const orderSchema = new mongoose.Schema<orderTypes>({
         ref: "auth",
         required: true
     },
-    userAddress: {
+    address: {
         streetName: {
             type: String,
             required: true

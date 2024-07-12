@@ -1,15 +1,21 @@
-import toast from "react-hot-toast";
 import useAddCart from "../hooks/useAddCart";
-import { ProductTypes } from "../types/types";
+import { ProductTypes, UserTypes } from "../types/types";
 
-const ProductCard = ({ product }: { product: ProductTypes }) => {
+const ProductCard = ({
+  user,
+  product,
+}: {
+  user: UserTypes | undefined;
+  product: ProductTypes;
+}) => {
+
   const { loading, addToCart } = useAddCart();
 
   const handleAddToCart = () => {
-    if (product._id) {
-      addToCart({ productId: product._id, quantity: "1" });
+    if (user && user._id && product._id) {
+      addToCart({ productId: product._id });
     } else {
-      toast.error("Product ID is missing");
+      console.error("User ID or Product ID is missing");
     }
   };
 
@@ -18,7 +24,10 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
     ? "text-green-500"
     : "text-red-500";
 
-  const priceDiffernce = product.price - product.discountedPrice;
+  const priceDiffernce =
+    product.price - (product.price * product.discount) / 100;
+
+  const discountedPrice = product.price - priceDiffernce;
 
   return (
     <div className="w-80 p-4 bg-neutral-950 text-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
@@ -32,7 +41,7 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
         <div className="flex-row space-y-1">
           <div className="flex mt-3 space-x-2">
             <p className=" text-lg font-bold text-yellow-400">
-              ${product.discountedPrice}
+              {priceDiffernce.toFixed(2)}
             </p>
             <p>({product.discount}% off)</p>
           </div>
@@ -42,7 +51,7 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
         </div>
         <div className=" flex mt-2 justify-between text-center ">
           <div className="bg-green-500 w-fit p-1 rounded-md">
-            <p>Save up to ${priceDiffernce.toFixed(2)}</p>
+            <p>Save up to ${discountedPrice.toFixed(2)}</p>
           </div>
           <div>
             <p className={`text-sm mb-2 ${availabilityClass}`}>

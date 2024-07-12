@@ -3,7 +3,6 @@ export interface AdminRegisterData {
     password: string
 }
 
-
 export interface AdminAuthTypes {
     id?: string
     email: string;
@@ -16,14 +15,14 @@ export interface ProductTypes {
     title: string;
     description: string;
     price: number;
-    discount: number;
-    discountedPrice: number;
+    discount?: number;
+    discountedPrice?: number;
     category: string;
     image: string;
     rating: number;
-    availability: boolean;
-    brand: string;
-    dimensions: string;
+    availability?: boolean;
+    brand?: string;
+    dimensions?: string;
 }
 
 export interface UserTypes {
@@ -33,5 +32,4 @@ export interface UserTypes {
     email: string;
     gender?: "male" | "female";
     profilePic?: string
-    // createdAt?: Date
 }

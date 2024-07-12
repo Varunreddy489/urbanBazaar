@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-// import { MdDelete } from "react-icons/md";
 import { IoAddSharp, IoRemoveOutline } from "react-icons/io5";
 
-// import useDeleteCart from "../../hooks/useDeleteCart";
-import { CartItemWithProductDetails } from "../../types/types";
-import useUpdateCart from "../../hooks/useUpdateCart";
+import { CartItemWithProductDetails } from "../types/types";
+import useUpdateCart from "../hooks/useUpdateCart";
 
 const CartProduct = ({
   cartItem,
@@ -46,6 +44,9 @@ const CartProduct = ({
     }
   };
 
+
+  const discountedPrice= productDetails.price - (productDetails.price * productDetails.discount) / 100
+
   return (
     <form className="container mx-auto mt-10 ">
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start">
@@ -66,7 +67,7 @@ const CartProduct = ({
                   {productDetails.description}
                 </p>
                 <p className="font-semibold text-center text-xl text-gray-900 dark:text-white">
-                  ${(productDetails.discountedPrice * quantity).toFixed(2)}
+                  ${(discountedPrice * quantity).toFixed(2)}
                 </p>
                 <p className="text-sm text-center text-gray-500 dark:text-gray-400">
                   Rating: {productDetails.rating} ★
