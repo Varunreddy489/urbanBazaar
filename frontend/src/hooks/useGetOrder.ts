@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const URL = "http://localhost:5000/api";
+const URL = "http://localhost:5000";
 
 const useGetOrder = () => {
     const [loading, setLoading] = useState(false);
@@ -18,7 +18,7 @@ const useGetOrder = () => {
             setError(error);
             console.log("error in getOrders:", error);
         } finally {
-            setLoading(false);  
+            setLoading(false);
         }
     };
 
