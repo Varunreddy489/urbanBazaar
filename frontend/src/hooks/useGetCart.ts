@@ -1,31 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import toast from "react-hot-toast";
-import { CartItem } from "../types/types";
+import { CartItemWithProductDetails } from "../types/types";
+import { useAuthContext } from "../context/AuthContext";
 
 const useGetCart = () => {
 
-    const URL = import.meta.env.VITE_BACKEND_URL;
-
+    // const URL = import.meta.env.VITE_BACKEND_URL;
+    const { authUser, isLoading: authLoading } = useAuthContext()
     const [loading, setLoading] = useState(false)
-    const [cartitems, setCartItems] = useState<CartItem[]>([])
+    const [cartItems, setCartItems] = useState<CartItemWithProductDetails[]>([])
 
-    const userData = localStorage.getItem("user");
-    const user = JSON.parse(userData || '{}');
 
-    const userId = user._id;
-
-    if (!userId) {
-        console.error("User ID is missing");
-        return;
-    }
 
     const getCartItems = async () => {
-        setLoading(true)
+        if (authLoading || !authUser || !authUser._id) return;
         try {
-            const response = await axios.get(`${URL}/cart/${userId}`)
+            const response = await axios.get(`http://localhost:5000/api/cart/${authUser._id}`);
             if (response.data && response.data.cartItems) {
-                console.log(response.data);
+                console.log(response.data.cartItems);
                 setCartItems(response.data.cartItems);
                 toast.success("Cart items fetched successfully!");
             } else {
@@ -38,7 +32,14 @@ const useGetCart = () => {
             setLoading(false)
         }
     }
-    return { loading, cartitems, getCartItems }
+
+    useEffect(() => {
+        if (!authLoading && authUser) {
+            getCartItems();
+        }
+    }, [authLoading, authUser]);
+
+    return { loading, cartItems, getCartItems }
 }
 
 export default useGetCart

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { productTypes } from "../types/types";
+import { ProductTypes } from "../types/types";
 
-const productSchema = new mongoose.Schema<productTypes>({
+const productSchema = new mongoose.Schema<ProductTypes>({
     title: {
         type: String,
         required: true
@@ -51,4 +51,4 @@ const productSchema = new mongoose.Schema<productTypes>({
     }
 });
 
-export const productModel = mongoose.model<productTypes>("product", productSchema);
+export const productModel = mongoose.model<ProductTypes>("product", productSchema);

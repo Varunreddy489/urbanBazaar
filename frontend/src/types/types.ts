@@ -31,7 +31,7 @@ export interface LoginData {
 }
 
 export interface AuthUserTypes {
-  id: string;
+  _id?: string;
   name: string;
   username: string;
   email: string;
@@ -47,7 +47,7 @@ export interface CartItem {
 }
 
 export interface cartTypes {
-  _id: string;
+  _id?: string;
   userId: string;
   items: CartItem[];
   totalPrice: number;
@@ -55,6 +55,7 @@ export interface cartTypes {
 }
 
 export interface CartItemWithProductDetails extends CartItem {
+  productId: string;
   productDetails: ProductTypes;
 }
 

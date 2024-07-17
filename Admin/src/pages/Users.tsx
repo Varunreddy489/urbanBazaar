@@ -12,8 +12,8 @@ const Users = () => {
   }, []);
 
   return (
-    <div className="bg-black text-white text-center h-full " >
-      <div className="flex" >
+    <div className="bg-black text-white text-center h-full ">
+      <div className="flex">
         {loading ? (
           <p>Loading...</p>
         ) : (

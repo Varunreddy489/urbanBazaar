@@ -18,7 +18,7 @@ const useGetOrder = () => {
             setError(error);
             console.log("error in getOrders:", error);
         } finally {
-            setLoading(false);
+            setLoading(false);  
         }
     };
 

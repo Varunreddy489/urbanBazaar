@@ -2,9 +2,10 @@ import mongoose from 'mongoose';
 import { Request, Response } from 'express';
 
 import { cartModel } from '../models/cartModel';
-import { authModel } from '../models/authModel';
+import { userModel } from '../models/userModel';
 import { productModel } from '../models/productModel';
-import { cartItemTypes, cartTypes } from '../types/types';
+import { cartItemTypes, cartTypes, ProductTypes } from '../types/types';
+import { CartItemWithProductDetails } from '../../../frontend/src/types/types';
 
 export const addToCart = async (req: Request, res: Response) => {
     try {
@@ -70,24 +71,23 @@ export const getCartProducts = async (req: Request, res: Response) => {
 
 export const getCartByUserId = async (req: Request, res: Response) => {
     try {
-        const userId = req.params.userId
+        const userId = req.params.userId;
 
-        const isUser = await authModel.findById(userId)
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: "Invalid userId" })
+        }
 
-        if (!isUser) return res.status(404).json({ error: "User not found" })
-
-        const cartItems = await cartModel.findOne({ userId }).populate({
+        const cartProducts = await cartModel.find({ userId }).populate({
             path: 'items.productId',
             model: 'product'
         })
-
-        return res.status(200).json({ cartItems });
+        res.status(200).json({ "cartItems": cartProducts })
 
     } catch (error) {
-        console.log("erorr in getCartProductsByUserId:", error);
-        return res.status(500).json({ error: "Internal Server Error" })
+        console.error("Error in getCartByUserId:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
     }
-}
+};
 
 export const updateCart = async (req: Request, res: Response) => {
     try {

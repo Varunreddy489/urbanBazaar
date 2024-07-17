@@ -25,7 +25,9 @@ export interface adminAuthTypes {
     password: string;
 }
 
-export interface productTypes {
+
+export interface ProductTypes {
+    _id?: Types.ObjectId;
     title: string;
     description: string;
     price: number;
@@ -40,6 +42,13 @@ export interface productTypes {
     quantity: number;
 }
 
+export interface CartItemWithProductDetails {
+    _id?: Types.ObjectId;
+    userId: string;
+    productId: string;
+    quantity: number;
+    productDetails: ProductTypes;
+}
 
 export interface cartItemTypes {
     productId: Types.ObjectId;

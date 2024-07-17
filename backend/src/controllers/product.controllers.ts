@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { productModel } from "../models/productModel";
-import { productTypes } from "../types/types";
+import { ProductTypes } from "../types/types";
 
-export const addProduct = async (req: Request<any, any, productTypes>, res: Response) => {
+export const addProduct = async (req: Request<any, any, ProductTypes>, res: Response) => {
     try {
-        const { title, description, price, category, image,discount, rating } = req.body
+        const { title, description, price, category, image, discount, rating } = req.body
 
         const existingProduct = await productModel.findOne({ title });
         if (existingProduct) {
@@ -36,7 +36,7 @@ export const addProduct = async (req: Request<any, any, productTypes>, res: Resp
     }
 };
 
-export const getAllProducts = async (req: Request<any, any, productTypes>, res: Response) => {
+export const getAllProducts = async (req: Request<any, any, ProductTypes>, res: Response) => {
     try {
         const products = await productModel.find();
         return res.status(200).json(products);
@@ -46,7 +46,7 @@ export const getAllProducts = async (req: Request<any, any, productTypes>, res: 
     }
 };
 
-export const getProduct = async (req: Request<any, any, productTypes>, res: Response) => {
+export const getProduct = async (req: Request<any, any, ProductTypes>, res: Response) => {
     try {
 
         const { id } = req.params
@@ -63,7 +63,7 @@ export const getProduct = async (req: Request<any, any, productTypes>, res: Resp
     }
 }
 
-export const updateProducts = async (req: Request<any, any, productTypes>, res: Response) => {
+export const updateProducts = async (req: Request<any, any, ProductTypes>, res: Response) => {
     try {
         const { id } = req.params
 
@@ -81,7 +81,7 @@ export const updateProducts = async (req: Request<any, any, productTypes>, res: 
     }
 }
 
-export const deleteProducts = async (req: Request<any, any, productTypes>, res: Response) => {
+export const deleteProducts = async (req: Request<any, any, ProductTypes>, res: Response) => {
     try {
         const { id } = req.params
 
@@ -103,3 +103,41 @@ export const deleteProducts = async (req: Request<any, any, productTypes>, res: 
         return res.status(404).json({ error: "Internal Server Error" })
     }
 }
+
+export const filterProducts = async (req: Request, res: Response) => {
+    try {
+        const { category, priceMin, priceMax, brand, ratingMin } = req.query;
+
+        const query: any = {};
+
+        if (category) {
+            query.category = category;
+        }
+
+        if (priceMin || priceMax) {
+            query.price = {};
+            if (priceMin) {
+                query.price.$gte = parseFloat(priceMin as string);
+            }
+            if (priceMax) {
+                query.price.$lte = parseFloat(priceMax as string);
+            }
+        }
+
+        if (brand) {
+            query.brand = brand;
+        }
+
+        if (ratingMin) {
+            query.rating = { $gte: parseFloat(ratingMin as string) };
+        }
+
+        // Fetch the filtered products from the database
+        const products = await productModel.find(query);
+
+        return res.status(200).json(products);
+    } catch (error) {
+        console.error("Error in filterProducts:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};

@@ -16,18 +16,21 @@ import { productRoutes } from "./routes/product.routes";
 const app = express();
 dotenv.config()
 
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:5173', 
+    credentials: true
+}));
 app.use(express.json())
 app.use(cookieParser());
 
 app.use("/api/cart", cartRoutes)
 app.use("/api/user", userRoutes)
 app.use("/api/admin", adminRoutes)
-app.use('/api/upload', uploadRoutes)
 app.use("/api/orders", orderRoutes)
+app.use('/api/upload', uploadRoutes)
 app.use("/api/product", productRoutes)
 
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT
 
 app.listen(PORT, () => {
     connectToMongo()

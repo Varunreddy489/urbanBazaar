@@ -1,13 +1,14 @@
 import { Toaster } from "react-hot-toast";
 import { Routes, Route, Navigate } from "react-router-dom";
 
+import Orders from "./pages/Orders";
+import Home from "./pages/Home/Home";
 import Cart from "./pages/Cart/Cart";
 import Profile from "./pages/Profile";
-import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/Register/Register";
+
 import { useAuthContext } from "./context/AuthContext";
-import Orders from "./pages/Orders";
 
 const App = () => {
   const { authUser } = useAuthContext();

@@ -1,7 +1,7 @@
 import path from "path";
 import multer from "multer";
 import { Router } from "express";
-import { authModel } from "../models/authModel";
+import { userModel } from "../models/userModel";
 
 const router = Router();
 
@@ -28,7 +28,7 @@ router.put("/", upload.single("file"), async (req, res) => {
             return res.status(400).json({ message: "Invalid request data" });
         }
 
-        const updatedUser = await authModel.findByIdAndUpdate(
+        const updatedUser = await userModel.findByIdAndUpdate(
             userId,
             { profilePic: fileUrl },
             { new: true }

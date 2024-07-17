@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { IoAddSharp, IoRemoveOutline } from "react-icons/io5";
-
 import { CartItemWithProductDetails } from "../types/types";
 import useUpdateCart from "../hooks/useUpdateCart";
 
-const CartProduct = ({
+const CartCard = ({
   cartItem,
   onUpdate,
 }: {
@@ -12,7 +11,7 @@ const CartProduct = ({
   cartId: string;
   onUpdate: () => void;
 }) => {
-  const { productDetails, quantity } = cartItem;
+  const { productId, quantity } = cartItem;
   const [cartQuantity, setCartQuantity] = useState(quantity);
   const { updateCart } = useUpdateCart();
 
@@ -28,7 +27,7 @@ const CartProduct = ({
       console.error(error);
     }
   };
-
+  
   const decreaseQuantity = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -44,11 +43,18 @@ const CartProduct = ({
     }
   };
 
+  // Ensure productDetails and its properties are defined before using them
+  if (!productId) {
+    return null;
+    console.log("No cart Items");
+  }
 
-  const discountedPrice= productDetails.price - (productDetails.price * productDetails.discount) / 100
+  const discountedPrice =productId.price;
+
+  console.log("discountedPrice", discountedPrice);
 
   return (
-    <form className="container mx-auto mt-10 ">
+    <form className="container mx-auto mt-10">
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start">
         <div className="w-full p-4 bg-white shadow rounded-lg">
           <div className="flex justify-between items-center mb-6"></div>
@@ -67,7 +73,7 @@ const CartProduct = ({
                   {productDetails.description}
                 </p>
                 <p className="font-semibold text-center text-xl text-gray-900 dark:text-white">
-                  ${(discountedPrice * quantity).toFixed(2)}
+                  {/* ${(discountedPrice * quantity).toFixed(2)} */}
                 </p>
                 <p className="text-sm text-center text-gray-500 dark:text-gray-400">
                   Rating: {productDetails.rating} ★
@@ -110,4 +116,4 @@ const CartProduct = ({
   );
 };
 
-export default CartProduct;
+export default CartCard;

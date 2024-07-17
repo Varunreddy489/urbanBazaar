@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import { adminModel } from "../models/adminModel";
 import generateTokenAndSetCookie from "../utils/genToken";
 import { authTypes } from "../types/types";
-import { authModel } from "../models/authModel";
+import { userModel } from "../models/userModel";
 
 export const login = async (req: Request, res: Response) => {
     try {
@@ -51,7 +51,7 @@ export const logout = async (req: Request, res: Response) => {
 
 export const getAllUsers = async (req: Request<any, any, authTypes>, res: Response) => {
     try {
-        const users = await authModel.find()
+        const users = await userModel.find()
         return res.status(200).json(users)
     } catch (error: any) {
         console.log("error in get all users:", error.message);
@@ -63,13 +63,13 @@ export const getUser = async (req: Request<any, any, authTypes>, res: Response) 
     try {
         const { id } = req.params
 
-        const isUserExists = await authModel.findById(id)
+        const isUserExists = await userModel.findById(id)
 
         if (!isUserExists) {
             return res.status(404).json({ error: "User Does not exist" })
         }
 
-        const user = await authModel.findById(id)
+        const user = await userModel.findById(id)
         return res.status(200).json(user)
     } catch (error: any) {
         console.log("error in get user:", error.message);
@@ -82,13 +82,13 @@ export const updateUser = async (req: Request<any, any, authTypes>, res: Respons
         const { id } = req.params
         const { name, username, email, password, confirmPassword, gender } = req.body
 
-        const isUserExists = await authModel.findById(id)
+        const isUserExists = await userModel.findById(id)
 
         if (!isUserExists) {
             return res.status(404).json({ error: "User Does not exist" })
         }
 
-        const user = await authModel.findByIdAndUpdate(id, req.body)
+        const user = await userModel.findByIdAndUpdate(id, req.body)
 
         return res.status(200).json(user)
 
@@ -102,13 +102,13 @@ export const deleteUser = async (req: Request<any, any, authTypes>, res: Respons
     try {
         const { id } = req.params
 
-        const isUserExists = await authModel.findById(id)
+        const isUserExists = await userModel.findById(id)
 
         if (!isUserExists) {
             return res.status(404).json({ error: "User Does not exist" })
         }
 
-        const user = await authModel.findByIdAndDelete(id)
+        const user = await userModel.findByIdAndDelete(id)
 
         if (!user) {
             return res.status(404).json({ eror: "user not found" })

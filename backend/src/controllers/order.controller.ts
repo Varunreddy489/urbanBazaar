@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { authModel } from "../models/authModel";
+import { userModel } from "../models/userModel";
 import { orderModel } from "../models/orderModel";
 import { addressModel } from "../models/addressModel";
 import { productModel } from "../models/productModel";
@@ -18,7 +18,7 @@ export const addOrder = async (req: Request, res: Response) => {
         }
 
         const product = await productModel.findById(productId);
-        const user = await authModel.findById(userId);
+        const user = await userModel.findById(userId);
 
         if (!product || !user) {
             return res.status(402).json({ message: "Invalid product or user" });
@@ -77,29 +77,3 @@ export const getOrdersByUserId = async (req: Request, res: Response) => {
     }
 }
 
-export const addAddress = async (req: Request, res: Response) => {
-    try {
-        const { userId, streetName, pincode, localityName, city, state } = req.body;
-
-        const isUser = await authModel.findById(userId);
-
-        if (!isUser) {
-            return res.status(400).send("Invalid user");
-        }
-
-        const newAddress = new addressModel({
-            userId,
-            streetName,
-            pincode,
-            localityName,
-            city,
-            state,
-        });
-
-        await newAddress.save();
-        return res.status(201).json({ message: "Address added successfully" });
-    } catch (error) {
-        console.error("Error in addAddress:", error);
-        return res.status(500).json({ message: "Internal server error" });
-    }
-};
