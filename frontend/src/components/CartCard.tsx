@@ -11,9 +11,17 @@ const CartCard = ({
   cartId: string;
   onUpdate: () => void;
 }) => {
-  const { productId, quantity } = cartItem;
+  const { productDetails, quantity } = cartItem;
+
+  console.log("productDetails:", productDetails);
+
   const [cartQuantity, setCartQuantity] = useState(quantity);
   const { updateCart } = useUpdateCart();
+
+  if (!productDetails) {
+    console.error("Product details are undefined");
+    return null;
+  }
 
   const increaseQuantity = async (
     event: React.MouseEvent<HTMLButtonElement>
@@ -27,7 +35,7 @@ const CartCard = ({
       console.error(error);
     }
   };
-  
+
   const decreaseQuantity = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -43,15 +51,9 @@ const CartCard = ({
     }
   };
 
-  // Ensure productDetails and its properties are defined before using them
-  if (!productId) {
-    return null;
-    console.log("No cart Items");
-  }
+  const effectivePrice = discount ? price * (1 - discount / 100) : price;
 
-  const discountedPrice =productId.price;
-
-  console.log("discountedPrice", discountedPrice);
+  console.log("discountedPrice", effectivePrice);
 
   return (
     <form className="container mx-auto mt-10">
@@ -62,21 +64,21 @@ const CartCard = ({
             <div className="flex items-center bg-white border border-gray-200 rounded-lg shadow-md dark:border-gray-700 dark:bg-gray-800 transform transition-transform duration-200 hover:scale-105">
               <img
                 className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-64 md:rounded-none md:rounded-l-lg"
-                src={productDetails.image}
-                alt={productDetails.title}
+                src={image}
+                alt={title}
               />
               <div className="flex flex-col justify-between p-4 leading-normal">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  {productDetails.title}
+                  {title}
                 </h5>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                  {productDetails.description}
+                  {description}
                 </p>
                 <p className="font-semibold text-center text-xl text-gray-900 dark:text-white">
                   {/* ${(discountedPrice * quantity).toFixed(2)} */}
                 </p>
                 <p className="text-sm text-center text-gray-500 dark:text-gray-400">
-                  Rating: {productDetails.rating} ★
+                  Rating: {rating} ★
                 </p>
                 <div className="flex items-center justify-center mt-4 ">
                   <p className="space-x-2 text-white flex items-center">

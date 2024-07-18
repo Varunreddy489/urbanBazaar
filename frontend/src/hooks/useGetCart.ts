@@ -12,8 +12,6 @@ const useGetCart = () => {
     const [loading, setLoading] = useState(false)
     const [cartItems, setCartItems] = useState<CartItemWithProductDetails[]>([])
 
-
-
     const getCartItems = async () => {
         if (authLoading || !authUser || !authUser._id) return;
         try {

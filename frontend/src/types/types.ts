@@ -1,9 +1,9 @@
 export interface UserTypes {
-  _id?: string
+  _id?: string;
 }
 
 export interface ProductTypes {
-  _id?: string
+  _id?: string;
   title: string;
   description: string;
   price: number;
@@ -55,16 +55,15 @@ export interface cartTypes {
 }
 
 export interface CartItemWithProductDetails extends CartItem {
-  productId: string;
   productDetails: ProductTypes;
 }
 
 export interface AddressTypes {
-  streetName: string
-  pincode: number
-  localityName: string
-  city: string
-  state: string
+  streetName: string;
+  pincode: number;
+  localityName: string;
+  city: string;
+  state: string;
 }
 
 export interface OrderTypes {

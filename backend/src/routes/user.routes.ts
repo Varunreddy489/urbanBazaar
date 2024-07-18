@@ -10,7 +10,7 @@ router.post("/register", register)
 router.post("/logout", logout)
 
 //address routes
-router.post('/address', addAddress)
+router.post('/address/:userId', addAddress)
 router.get('/address/:userId', getAddress)
 
 export { router as userRoutes }

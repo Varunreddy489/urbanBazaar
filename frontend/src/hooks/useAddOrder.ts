@@ -16,6 +16,7 @@ const useAddOrder = () => {
             console.log("error in useAddOrder:", error);
         }
     }
+    return { loading, addOrder }
 }
 
 export default useAddOrder

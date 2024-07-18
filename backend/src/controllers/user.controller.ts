@@ -93,7 +93,8 @@ export const logout = async (req: Request<any, any, authTypes>, res: Response) =
 
 export const addAddress = async (req: Request, res: Response) => {
     try {
-        const { userId, streetName, pincode, localityName, city, state } = req.body;
+        const { userId } = req.params
+        const { streetName, pincode, localityName, city, state } = req.body;
 
         const isUser = await userModel.findById(userId);
 
@@ -142,7 +143,7 @@ export const getAddress = async (req: Request, res: Response) => {
         }
 
         const addresses = await addressModel.find({ userId })
-        
+
         if (!addresses.length) {
             return res.status(404).json({ message: "No addresses found for this user" });
         }
