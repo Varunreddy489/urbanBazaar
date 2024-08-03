@@ -5,7 +5,6 @@ import { cartModel } from '../models/cartModel';
 import { userModel } from '../models/userModel';
 import { productModel } from '../models/productModel';
 import { cartItemTypes, cartTypes, ProductTypes } from '../types/types';
-import { CartItemWithProductDetails } from '../../../frontend/src/types/types';
 
 export const addToCart = async (req: Request, res: Response) => {
     try {

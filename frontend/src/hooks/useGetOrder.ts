@@ -1,28 +1,41 @@
 import axios from "axios";
 import { useState } from "react";
-
-const URL = "http://localhost:5000";
+import { useAuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const useGetOrder = () => {
-    const [loading, setLoading] = useState(false);
-    const [order, setOrder] = useState([]);
-    const [error, setError] = useState(null);
+  const { authUser, isLoading: authLoading } = useAuthContext();
 
-    const getOrders = async () => {
-        setLoading(true);
-        try {
-            const response = await axios.get(`${URL}/orders`);
-            setOrder(response.data.orders);
-            console.log(response.data);
-        } catch (error: any) {
-            setError(error);
-            console.log("error in getOrders:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [order, setOrder] = useState([]);
 
-    return { loading, order, error, getOrders };
+  const getOrders = async () => {
+    if (authLoading || !authUser) return;
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/orders/${authUser._id}`
+      );
+      setOrder(response.data.orders);
+      console.log(response.data);
+    } catch (error: any) {
+      console.log("error in getOrders:", error);
+      if (axios.isAxiosError(error) && error.response && error.response.data) {
+        toast.error(
+          error.response.data.error ||
+            "Failed to register. Please try again later."
+        );
+      } else {
+        toast.error("Failed to register. Please try again later.");
+      }
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { loading, order, error, getOrders };
 };
 
 export default useGetOrder;

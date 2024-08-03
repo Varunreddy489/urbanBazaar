@@ -1,5 +1,10 @@
 export interface UserTypes {
   _id?: string;
+  name: string;
+  username: string;
+  email: string;
+  gender: string;
+  address?: AddressTypes;
 }
 
 export interface ProductTypes {
@@ -59,6 +64,7 @@ export interface CartItemWithProductDetails extends CartItem {
 }
 
 export interface AddressTypes {
+  userId?: string;
   streetName: string;
   pincode: number;
   localityName: string;
@@ -67,11 +73,12 @@ export interface AddressTypes {
 }
 
 export interface OrderTypes {
-  _id: string;
+  _id?: string;
   productId: ProductTypes;
   userId: string;
   address: AddressTypes;
   quantity: number;
   status?: string;
   totalPrice?: number;
+  date: string;
 }

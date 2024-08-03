@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { UserTypes } from "../types/types";
 import Usercard from "../components/Usercard";
 import useGetUsers from "../hooks/useGetUsers";
+import Spinner from "../components/Spinner";
 
 const Users = () => {
   const { loading, users, getUsers } = useGetUsers();
@@ -15,7 +16,7 @@ const Users = () => {
     <div className="bg-black text-white text-center h-full ">
       <div className="flex">
         {loading ? (
-          <p>Loading...</p>
+          <Spinner />
         ) : (
           users?.map((user: UserTypes) => (
             <Usercard key={user._id} user={user} />

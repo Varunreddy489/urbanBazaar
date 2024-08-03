@@ -72,8 +72,10 @@ export const login = async (req: Request<any, any, authTypes>, res: Response) =>
         res.status(200).json({
             _id: user._id,
             name: user.name,
+            email: user.email,
+            gender: user.gender,
             username: user.username,
-            profilePic: user.profilePic
+            profilePic: user.profilePic,
         })
     } catch (error: any) {
         console.log("error in login:", error.message);
@@ -125,7 +127,7 @@ export const addAddress = async (req: Request, res: Response) => {
         });
 
         await newAddress.save();
-        return res.status(201).json({ message: "Address added successfully" });
+        return res.status(201).json({ newAddress });
     } catch (error) {
         console.error("Error in addAddress:", error);
         return res.status(500).json({ message: "Internal server error" });
@@ -142,16 +144,37 @@ export const getAddress = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Invalid user" })
         }
 
-        const addresses = await addressModel.find({ userId })
+        const address = await addressModel.find({ userId })
 
-        if (!addresses.length) {
+        if (!address.length) {
             return res.status(404).json({ message: "No addresses found for this user" });
         }
 
-        return res.status(200).json(addresses)
+        return res.status(200).json(address)
 
     } catch (error) {
         console.error("error in getAddress:", error);
         return res.status(500).json({ message: "Internal server error" })
     }
 }
+
+export const updateUser = async (req: Request<any, any, authTypes>, res: Response) => {
+    try {
+        const { id } = req.params
+        const { name, username, email, gender } = req.body
+
+        const isUserExists = await userModel.findById(id)
+
+        if (!isUserExists) {
+            return res.status(404).json({ error: "User Does not exist" })
+        }
+
+        const user = await userModel.findByIdAndUpdate(id, req.body)
+
+        return res.status(200).json(user)
+
+    } catch (error: any) {
+        console.log("error in update user:", error.message);
+        res.status(404).json({ error: "internal server error" })
+    }
+};

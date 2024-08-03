@@ -9,8 +9,15 @@ export const addOrder = async (req: Request, res: Response) => {
     try {
         const { productId, userId, address, quantity } = req.body;
 
-        if (!productId || !userId || !address) {
-            return res.status(400).json({ message: "All fields are required" });
+        if (!productId) {
+            return res.status(400).json({ message: "productId fields are required" });
+        }
+
+        if (!userId) {
+            return res.status(400).json({ message: "userId fields are required" });
+        }
+        if (!address) {
+            return res.status(400).json({ message: "address fields are required" });
         }
 
         if (quantity < 1) {
@@ -21,7 +28,7 @@ export const addOrder = async (req: Request, res: Response) => {
         const user = await userModel.findById(userId);
 
         if (!product || !user) {
-            return res.status(402).json({ message: "Invalid product or user" });
+            return res.status(404).json({ message: "Invalid product or user" });
         }
 
         const isAddress = await addressModel.findOne(address)

@@ -9,11 +9,14 @@ import Login from "./pages/Login/Login";
 import SignUp from "./pages/Register/Register";
 
 import { useAuthContext } from "./context/AuthContext";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const App = () => {
   const { authUser } = useAuthContext();
   return (
     <div className="">
+      <Navbar />
       <Routes>
         <Route
           path="/"
@@ -40,6 +43,7 @@ const App = () => {
           element={authUser ? <Orders /> : <Navigate to="/login" />}
         />
       </Routes>
+      <Footer />
       <Toaster />
     </div>
   );

@@ -14,7 +14,7 @@ const Dropdown = () => {
       className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 dark:bg-gray-700 overflow-auto"
       id="user-dropdown"
     >
-      <div className="px-4 py-3">
+      <div className="px-4 space-y-2 py-3">
         <span className="block text-sm text-gray-900 dark:text-white">
           {userData?.name}
         </span>

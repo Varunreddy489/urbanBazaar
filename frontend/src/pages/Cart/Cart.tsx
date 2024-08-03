@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import useGetCart from "../../hooks/useGetCart";
 import { CartItemWithProductDetails } from "../../types/types";
 import CartCard from "../../components/CartCard";
+import Spinner from "../../components/Spinner";
 
 const Cart = () => {
   const { loading, cartItems, getCartItems } = useGetCart();
@@ -13,7 +15,7 @@ const Cart = () => {
   return (
     <div className="bg-black text-white h-screen ">
       {loading ? (
-        <p>Loading...</p>
+         <Spinner />
       ) : (
         cartItems.map((cartItem: CartItemWithProductDetails) => (
           <CartCard

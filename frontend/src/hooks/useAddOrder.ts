@@ -1,21 +1,24 @@
 import axios from "axios"
 import { useState } from "react"
+import { OrderTypes } from "../types/types"
+import toast from "react-hot-toast"
 
 const useAddOrder = () => {
+
     const [loading, setLoading] = useState(false)
 
-    const addOrder = async () => {
-        setLoading(true)
-        const URL = import.meta.env.VITE.BACKEND_URL
-        console.log(URL);
-        try {
-            const response = await axios.post(`${URL}/api/orders`)
-            console.log(response.data);
+    const addOrder = async (orderData: OrderTypes) => {
+        setLoading(true);
 
+        try {
+            const response = await axios.post(`http://localhost:5000/api/orders`, orderData)
+            console.log(response.data);
+            toast.success("Order added successfully")
         } catch (error) {
-            console.log("error in useAddOrder:", error);
+            console.error("errror in addOrder:", error);
         }
     }
+
     return { loading, addOrder }
 }
 

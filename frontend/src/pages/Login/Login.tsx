@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { ChangeEvent, FormEvent, useState } from "react";
 import useLogin from "../../hooks/useLogin";
 
@@ -7,6 +8,12 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const { loading, login } = useLogin();
 
@@ -49,20 +56,32 @@ const Login = () => {
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 relative ">
             <input
               placeholder="Password"
               className="bg-gray-700 w-full text-gray-200 border-0 rounded-md p-3 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-              type="password"
+              type={showPassword ? "text":"password" }
               name="password"
               value={inputs.password}
               onChange={handleInputChange}
               required
             />
+
+            <button
+              type="button"
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-white"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? (
+                <FiEyeOff className="text-2xl" />
+              ) : (
+                <FiEye className="text-2xl" />
+              )}
+            </button>
           </div>
 
           <Link
-            to='/signup'
+            to="/signup"
             className="text-md text-white hover:text-blue-300 underline"
           >
             New to Ecommerce !! Signup

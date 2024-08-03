@@ -11,5 +11,4 @@ router.get('/:userId', getCartByUserId);
 router.put('/:userId/:productId', updateCart);
 router.delete('/:cartId', removeItem);
 
-
 export { router as cartRoutes }

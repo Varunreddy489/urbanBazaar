@@ -7,7 +7,6 @@ import { useAuthContext } from "../context/AuthContext";
 
 const useGetCart = () => {
 
-    // const URL = import.meta.env.VITE_BACKEND_URL;
     const { authUser, isLoading: authLoading } = useAuthContext()
     const [loading, setLoading] = useState(false)
     const [cartItems, setCartItems] = useState<CartItemWithProductDetails[]>([])
@@ -41,3 +40,4 @@ const useGetCart = () => {
 }
 
 export default useGetCart
+

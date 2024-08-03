@@ -1,28 +1,33 @@
-import axios from "axios"
-import { useState } from "react"
-import { useAuthContext } from "../context/AuthContext"
+import axios from "axios";
+import { useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
+import { AddressTypes } from "../types/types";
 
 const useAddAddress = () => {
-    const [loading, setLoading] = useState(false)
-    const { authUser } = useAuthContext()
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { authUser } = useAuthContext();
 
-    console.log("authUser._id", authUser?._id);
-
-    const addAddress = async () => {
-        if (!authUser) {
-            console.error("No authenticated user found")
-            return
-        }
-        setLoading(true)
-
-        try {
-            const response = await axios.post(`http://localhost:5000/api/user/address/${authUser._id}`)
-            console.log(response.data);
-        } catch (error) {
-            console.log("error in useAddAddress", error);
-        }
+  const addAddress = async (address: AddressTypes) => {
+    if (!authUser) {
+      console.error("No authenticated user found");
+      return;
     }
-    return { loading, addAddress }
-}
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/user/address/${authUser._id}`,
+        address
+      );
+      console.log(response.data);
+    } catch (error: any) {
+      console.error("error in useAddAddress:", error.message);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { loading, error, addAddress };
+};
 
-export default useAddAddress
+export default useAddAddress;

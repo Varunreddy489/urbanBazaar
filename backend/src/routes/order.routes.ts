@@ -6,6 +6,6 @@ const router = Router()
 //order routes
 router.post('/', addOrder)
 router.get('/admin', getAllOrders)
-router.get('/user/:userId', getOrdersByUserId);
+router.get('/:userId', getOrdersByUserId);
 
 export { router as orderRoutes }
