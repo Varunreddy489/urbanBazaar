@@ -11,7 +11,7 @@ const useGetUsers = () => {
         try {
             const response = await axios.get('http://localhost:5000/api/admin')
             setUsers(response.data)
-            console.log(response.data);
+            console.log(response.data);  
         } catch (error) {
             console.error("error in useGetUsers:", error);
         } finally {

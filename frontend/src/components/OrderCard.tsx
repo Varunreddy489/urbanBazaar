@@ -43,7 +43,7 @@ const OrderCard = ({ orderItem }: { orderItem: OrderTypes }) => {
   }, [deliveryDate]);
 
   return (
-    <div className="flex items-center bg-white border border-gray-200 rounded-lg shadow-md dark:border-gray-700 dark:bg-gray-700 m-14 transform transition-transform duration-200 hover:scale-105 mb-4">
+    <div className="flex items-center  bg-white border border-gray-200 rounded-lg shadow-md dark:border-gray-700 dark:bg-gray-800 m-14 transform transition-transform duration-200 hover:scale-105 mb-4">
       <img
         className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-64 md:rounded-none md:rounded-l-lg"
         src={orderItem.productId.image}

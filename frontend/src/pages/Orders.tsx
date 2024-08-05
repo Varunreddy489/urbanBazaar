@@ -12,9 +12,8 @@ const Orders = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-4 dark:bg-gray-800">
-      <h1 className="text-white text-3xl font-semibold pr-96 ">Your Orders</h1>
-      <div className="">
+    <div className="container mx-auto p-4 dark:bg-gray-900">
+      <h1 className="text-white text-3xl  font-semibold pl-10 ">Your Orders</h1>
         {loading ? (
           <Spinner />
         ) : (
@@ -22,7 +21,6 @@ const Orders = () => {
             <OrderCard key={orderItem._id} orderItem={orderItem} />
           ))
         )}
-      </div>
     </div>
   );
 };

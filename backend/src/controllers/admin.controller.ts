@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from 'bcryptjs'
 import { adminModel } from "../models/adminModel";
 import generateTokenAndSetCookie from "../utils/genToken";
-import { authTypes } from "../types/types";
+import { AuthTypes } from "../types/types";
 import { userModel } from "../models/userModel";
 
 export const login = async (req: Request, res: Response) => {
@@ -49,17 +49,21 @@ export const logout = async (req: Request, res: Response) => {
     }
 }
 
-export const getAllUsers = async (req: Request<any, any, authTypes>, res: Response) => {
+export const getAllUsers = async (req: Request<any, any, AuthTypes>, res: Response) => {
     try {
         const users = await userModel.find()
-        return res.status(200).json(users)
+            .populate('address')  
+            .populate('orders');  
+
+        return res.status(200).json(users);
     } catch (error: any) {
         console.log("error in get all users:", error.message);
-        res.status(500).json({ error: "internal server error" })
+        res.status(500).json({ error: "internal server error" });
     }
 };
 
-export const getUser = async (req: Request<any, any, authTypes>, res: Response) => {
+
+export const getUser = async (req: Request<any, any, AuthTypes>, res: Response) => {
     try {
         const { id } = req.params
 
@@ -79,7 +83,7 @@ export const getUser = async (req: Request<any, any, authTypes>, res: Response) 
 
 
 
-export const deleteUser = async (req: Request<any, any, authTypes>, res: Response) => {
+export const deleteUser = async (req: Request<any, any, AuthTypes>, res: Response) => {
     try {
         const { id } = req.params
 

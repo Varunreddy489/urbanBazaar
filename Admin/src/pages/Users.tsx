@@ -13,10 +13,12 @@ const Users = () => {
   }, []);
 
   return (
-    <div className="bg-black text-white text-center h-full ">
-      <div className="flex">
+    <div className="bg-black  text-white text-center h-full ">
+      <div className="flex ">
         {loading ? (
-          <Spinner />
+          <div>
+            <Spinner />
+          </div>
         ) : (
           users?.map((user: UserTypes) => (
             <Usercard key={user._id} user={user} />

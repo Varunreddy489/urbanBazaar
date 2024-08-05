@@ -1,19 +1,25 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
-import { ProductTypes } from "../types/types";
-import useGetProducts from "../hooks/useGetProducts";
-import ProductCard from "../components/ProductCard";
 import Spinner from "../components/Spinner";
+import { ProductTypes } from "../types/types";
+import ProductCard from "../components/ProductCard";
+import useGetProducts from "../hooks/useGetProducts";
 
 const Products = () => {
   const { loading, products, getProducts } = useGetProducts();
 
-  useEffect(() => {
+  const memoizedGetProducts = useCallback(() => {
     getProducts();
+  }, [getProducts]);
+
+  useEffect(() => {
+    memoizedGetProducts();
   }, []);
 
   return (
-    <div className="flex bg-black justify-center items-center  mt-6 ">
+    <div className=" bg-black justify-center items-center ">
+      <br />
+      <h1 className="text-white ml-10 text-5xl font-bold ">Products</h1>:
       <div className="w-full px-4 grid grid-cols-3">
         {loading ? (
           <Spinner />
@@ -23,6 +29,7 @@ const Products = () => {
           ))
         )}
       </div>
+      <br />
     </div>
   );
 };

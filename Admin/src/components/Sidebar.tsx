@@ -2,7 +2,7 @@ import { MdDashboard } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
 import { TbTruckDelivery } from "react-icons/tb";
 import { CiDeliveryTruck, CiLogout } from "react-icons/ci";
-import {  FaUserFriends } from "react-icons/fa";
+import { FaUserFriends } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import useLogoutAdmin from "../hooks/useLogoutAdmin";
@@ -15,7 +15,7 @@ const Sidebar = () => {
   const { loading, logout } = useLogoutAdmin();
 
   return (
-    <aside className="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+    <aside className="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto  border-r rtl:border-r-0 rtl:border-l dark:bg-gray-950 dark:border-gray-900">
       <Link to="/" className="mx-auto">
         <img src={Urbanlogo} className="h-8" alt="UrbanBazaar Logo" />
       </Link>

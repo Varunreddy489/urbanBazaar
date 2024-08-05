@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
-import { addressTypes } from "../types/types";
+import { AddressTypes } from "../types/types";
 
-const addressSchema = new mongoose.Schema<addressTypes>({
+const addressSchema = new mongoose.Schema<AddressTypes>({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'user' 
     },
     streetName: {
         type: String,
@@ -26,4 +27,4 @@ const addressSchema = new mongoose.Schema<addressTypes>({
     }
 }, { timestamps: true });
 
-export const addressModel = mongoose.model<addressTypes>("address", addressSchema);
+export const addressModel = mongoose.model<AddressTypes>("address", addressSchema);

@@ -1,12 +1,12 @@
 import bcrypt from 'bcryptjs';
 import { Request, Response } from "express";
 
-import { authTypes } from "../types/types";
+import { AuthTypes } from "../types/types";
 import { userModel } from "../models/userModel";
 import { addressModel } from "../models/addressModel";
 import generateTokenAndSetCookie from "../utils/genToken";
 
-export const register = async (req: Request<any, any, authTypes>, res: Response) => {
+export const register = async (req: Request<any, any, AuthTypes>, res: Response) => {
     try {
         const { name, username, email, password, confirmPassword, gender, profilePic } = req.body
 
@@ -55,7 +55,7 @@ export const register = async (req: Request<any, any, authTypes>, res: Response)
     }
 };
 
-export const login = async (req: Request<any, any, authTypes>, res: Response) => {
+export const login = async (req: Request<any, any, AuthTypes>, res: Response) => {
     try {
         const { email, password } = req.body
 
@@ -83,7 +83,7 @@ export const login = async (req: Request<any, any, authTypes>, res: Response) =>
     }
 };
 
-export const logout = async (req: Request<any, any, authTypes>, res: Response) => {
+export const logout = async (req: Request<any, any, AuthTypes>, res: Response) => {
     try {
         res.cookie("jwt", "", { maxAge: 0 });
         res.status(200).json({ message: "Logged out successfully" });
@@ -158,7 +158,7 @@ export const getAddress = async (req: Request, res: Response) => {
     }
 }
 
-export const updateUser = async (req: Request<any, any, authTypes>, res: Response) => {
+export const updateUser = async (req: Request<any, any, AuthTypes>, res: Response) => {
     try {
         const { id } = req.params
         const { name, username, email, gender } = req.body

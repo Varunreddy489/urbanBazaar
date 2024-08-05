@@ -1,7 +1,7 @@
 import mongoose, { Types } from "mongoose";
-import { orderTypes } from "../types/types";
+import { OrderTypes } from "../types/types";
 
-const orderSchema = new mongoose.Schema<orderTypes>({
+const orderSchema = new mongoose.Schema<OrderTypes>({
     productId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "product",
@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema<orderTypes>({
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "auth",
+        ref: "user", 
         required: true
     },
     address: {
@@ -54,4 +54,4 @@ const orderSchema = new mongoose.Schema<orderTypes>({
     }
 }, { timestamps: true });
 
-export const orderModel = mongoose.model<orderTypes>("order", orderSchema);
+export const orderModel = mongoose.model<OrderTypes>("order", orderSchema);

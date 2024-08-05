@@ -1,7 +1,8 @@
+import axios from 'axios';
 import { useState } from "react"
 import toast from "react-hot-toast"
+
 import { AdminRegisterData } from '../types/types';
-import axios from 'axios';
 import { useAdminAuthContext } from "../context/AdminAuthContext";
 
 const useLoginAdmin = () => {

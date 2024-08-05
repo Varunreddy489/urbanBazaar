@@ -20,7 +20,7 @@ const Navbar = () => {
   const userData = data ? JSON.parse(data) : null;
 
   return (
-    <nav className=" dark:bg-gray-900 relative ">
+    <nav className=" dark:bg-gray-950 relative ">
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
         <a href="/" className="flex items-center space-x-3">
           <img src={Urbanlogo} className="h-8" alt="UrbanBazaar Logo" />

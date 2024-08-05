@@ -28,7 +28,7 @@ app.use("/api/admin", adminRoutes)
 app.use("/api/orders", orderRoutes)
 app.use("/api/product", productRoutes)
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 8000
 
 app.listen(PORT, () => {
     connectToMongo()
