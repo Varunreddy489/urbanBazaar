@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Error from "../components/Errorr";
+import Error from "../components/Error";
 import Spinner from "../components/Spinner";
 import OrderCard from "../components/OrderCard";
 import useGetOrders from "../hooks/useGetOrders";
