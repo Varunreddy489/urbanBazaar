@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import Error from "../components/Error";
 import Spinner from "../components/Spinner";
@@ -37,3 +38,4 @@ const Orders = () => {
 };
 
 export default Orders;
+  
