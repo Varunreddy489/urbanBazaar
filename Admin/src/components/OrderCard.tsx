@@ -1,6 +1,6 @@
 import { OrderTypes } from "../types/types";
 
-const OrderCard = ({order}:{ order: OrderTypes }) => {
+const OrderCard = ({ order }: { order: OrderTypes }) => {
   const {
     productId: { title, availability },
     userId: { name, email },
@@ -8,6 +8,8 @@ const OrderCard = ({order}:{ order: OrderTypes }) => {
     totalPrice,
     quantity,
   } = order;
+
+  console.log(order);
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 mb-4">

@@ -12,8 +12,6 @@ const Orders = () => {
     getOrders();
   }, []);
 
-  console.log(orders);
-
   if (loading) {
     return (
       <div className="flex items-center justify-center">
@@ -27,6 +25,8 @@ const Orders = () => {
     return <Error />;
   }
 
+  console.log(orders);
+
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-4xl font-bold mb-6">Orders</h1>
@@ -38,4 +38,3 @@ const Orders = () => {
 };
 
 export default Orders;
-  

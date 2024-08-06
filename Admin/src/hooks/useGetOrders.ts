@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { OrderTypes } from "../types/types";
 import axios from "axios";
+import { useState } from "react";
+
+import { OrderTypes } from "../types/types";
 
 const useGetOrders = () => {
   const [loading, setLoading] = useState(false);
@@ -11,8 +12,8 @@ const useGetOrders = () => {
     setLoading(true);
     try {
       const response = await axios.get("http://localhost:5000/api/orders/admin");
-      setOrders(response.data);
-      console.log();
+      setOrders(response.data.orders);
+      console.log(response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("Axios error in useGetOrders:", error.message);
