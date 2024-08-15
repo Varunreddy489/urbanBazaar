@@ -11,39 +11,46 @@ import SignUp from "./pages/Register/Register";
 import { useAuthContext } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Settings from "./pages/Settings/Settings";
 
 const App = () => {
   const { authUser } = useAuthContext();
   return (
-    <div className="">
-      <Navbar />
-      <Routes>
-        <Route
-          path="/"
-          element={authUser ? <Home /> : <Navigate to={"/login"} />}
-        />
-        <Route
-          path="/login"
-          element={authUser ? <Navigate to="/" /> : <Login />}
-        />
-        <Route
-          path="/signup"
-          element={authUser ? <Navigate to="/" /> : <SignUp />}
-        />
-        <Route
-          path="/cart"
-          element={authUser ? <Cart /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/profile"
-          element={authUser ? <Profile /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/orders"
-          element={authUser ? <Orders /> : <Navigate to="/login" />}
-        />
-      </Routes>
-      <Footer />
+    <div className="flex flex-col min-h-screen">
+      {authUser && <Navbar />}
+      <main className="flex-grow">
+        <Routes>
+          <Route
+            path="/"
+            element={authUser ? <Home /> : <Navigate to={"/login"} />}
+          />
+          <Route
+            path="/login"
+            element={authUser ? <Navigate to="/" /> : <Login />}
+          />
+          <Route
+            path="/signup"
+            element={authUser ? <Navigate to="/" /> : <SignUp />}
+          />
+          <Route
+            path="/cart"
+            element={authUser ? <Cart /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/profile"
+            element={authUser ? <Profile /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/orders"
+            element={authUser ? <Orders /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/settings"
+            element={authUser ? <Settings /> : <Navigate to="/login" />}
+          />
+        </Routes>
+      </main>
+      {authUser && <Footer />}
       <Toaster />
     </div>
   );

@@ -74,7 +74,7 @@ export interface AddressTypes {
 
 export interface OrderTypes {
   _id?: string;
-  productId: ProductTypes;
+  productId?: ProductTypes;
   userId: string;
   address: AddressTypes;
   quantity: number;

@@ -15,14 +15,13 @@ export interface ProductTypes {
   title: string;
   description: string;
   price: number;
-  discount?: number;
-  discountedPrice?: number;
+  discount: number;
   category: string;
   image: string;
   rating: number;
-  availability?: boolean;
-  brand?: string;
+  brand: string;
   dimensions?: string;
+  quantity: number;
 }
 
 export interface UserTypes {
@@ -32,6 +31,8 @@ export interface UserTypes {
   email: string;
   gender?: "male" | "female";
   profilePic?: string;
+  address?: AddressTypes[];
+  orders: OrderTypes[];
 }
 
 export interface OrderTypes {
@@ -47,7 +48,7 @@ export interface OrderTypes {
 
 export interface AddressTypes {
   userId?: string;
-  streetName: string;
+  streetName?: string;
   pincode: number;
   localityName: string;
   city: string;

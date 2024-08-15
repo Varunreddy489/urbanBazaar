@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 
 import { ProductTypes } from "../types/types";
 
-
 const useGetProducts = () => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<ProductTypes[]>([]);

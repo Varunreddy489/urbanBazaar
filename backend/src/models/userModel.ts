@@ -32,10 +32,7 @@ const userSchema = new mongoose.Schema<AuthTypes>(
       type: mongoose.Schema.Types.ObjectId,
       ref: "address",
     },
-    orders: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "order",
-    },
+    orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "order" }],
   },
   { timestamps: true }
 );

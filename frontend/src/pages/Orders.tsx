@@ -11,8 +11,8 @@ const Orders = () => {
     getOrders();
   }, []);
 
-  return (
-    <div className="container mx-auto p-4 dark:bg-gray-900">
+return (
+    <div className=" w-full p-4 bg-gray-900">
       <h1 className="text-white text-3xl  font-semibold pl-10 ">Your Orders</h1>
         {loading ? (
           <Spinner />

@@ -2,10 +2,9 @@ import { ProductTypes } from "../types/types";
 import { BsStarFill } from "react-icons/bs";
 
 const ProductCard = ({ product }: { product: ProductTypes }) => {
-  const availabilityText = product.availability ? "In Stock" : "Out of Stock";
-  const availabilityClass = product.availability
-    ? "text-green-500"
-    : "text-red-500";
+  const availabilityText = product.quantity > 0 ? "In Stock" : "Out of Stock";
+  const availabilityClass =
+    product.quantity > 0 ? "text-green-500" : "text-red-500";
 
   const renderStars = (rating: number) => {
     const stars = [];
@@ -15,9 +14,11 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
     return stars;
   };
 
-  const discountedPrice = product.discountedPrice
-    ? product.discountedPrice.toFixed(2)
-    : "";
+  const discountedPrice = (
+    product.price -
+    product.price * (product.discount / 100)
+  ).toFixed(2);
+
   const price = product.price ? product.price.toFixed(2) : "";
 
   return (
@@ -29,20 +30,24 @@ const ProductCard = ({ product }: { product: ProductTypes }) => {
       />
       <div className="p-4">
         <h2 className="text-xl font-semibold mb-2">{product.title}</h2>
-        <p>{}</p>
+
         <p className="text-sm text-gray-400 mb-2">{product.brand}</p>
 
         <div className="flex space-x-2 items-center ">
           <p className="text-lg font-bold text-yellow-400 mr-2">
-            {discountedPrice}
+            {discountedPrice} $
           </p>
-          <p className="text-sm text-gray-400 line-through">{price}</p>
+          <p className=" text-gray-300">({product.discount}% off)</p>
         </div>
-        <p className=" text-gray-300">({product.discount}% off)</p>
+        <p className="text-sm text-gray-400 line-through">{price}</p>
+
         <p className="mt-2 text-gray-400 mb-2">Category: {product.category}</p>
         <p className={`text-sm mb-2 ${availabilityClass}`}>
           {availabilityText}
         </p>
+
+        <p>Quantity:{" "}{product.quantity}</p>
+
         <div className="flex justify-between items-center mt-4">
           <div className="flex items-center">
             <p className="bg-green-500 px-2 py-1 rounded text-white flex items-center gap-1">

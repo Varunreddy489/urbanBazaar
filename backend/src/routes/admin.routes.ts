@@ -1,13 +1,23 @@
 import { Router } from "express";
 import { verifyToken } from "../middleware/protectedRoute";
-import { deleteUser, getAllUsers, getUser, login, logout } from "../controllers/admin.controller";
+import {
+  login,
+  logout,
+  getUser,
+  deleteUser,
+  getAllUsers,
+  getAllOrders,
+} from "../controllers/admin.controller";
 
-const router = Router()
-router.post('/login', login)
-router.post('/logout', logout)
+const router = Router();
 
-router.get("/",getAllUsers)
-router.get("/:id", getUser)
-router.delete("/:id",  deleteUser)
+router.post("/login", login);
+router.post("/logout", logout);
 
-export { router as adminRoutes }
+router.get("/orders", getAllOrders);
+
+router.get("/", getAllUsers);
+router.get("/:id", getUser);
+router.delete("/:id", deleteUser);
+
+export { router as adminRoutes };

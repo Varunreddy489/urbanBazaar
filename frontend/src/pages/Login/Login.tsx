@@ -39,7 +39,12 @@ const Login = () => {
     });
   };
   return (
-    <div className="flex flex-col items-center justify-center h-screen dark">
+    <div className="flex flex-col items-center justify-center h-screen bg-black">
+      <div>
+        <h1 className="text-white text-5xl font-semibold mb-6 text-center tracking-tight md:text-6xl">
+          Login to Begin Your Journey
+        </h1>
+      </div>
       <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-4">
           Welcome Back
@@ -60,7 +65,7 @@ const Login = () => {
             <input
               placeholder="Password"
               className="bg-gray-700 w-full text-gray-200 border-0 rounded-md p-3 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-              type={showPassword ? "text":"password" }
+              type={showPassword ? "text" : "password"}
               name="password"
               value={inputs.password}
               onChange={handleInputChange}

@@ -37,9 +37,11 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen dark">
+    <div className="flex flex-col items-center justify-center h-screen bg-black ">
       <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold text-gray-200 mb-4">Sign Up</h2>
+        <h2 className=" font-bold text-center text-3xl text-gray-200 mb-4">
+          Sign Up
+        </h2>
         <form className="flex flex-col">
           <div className="mb-4">
             <input
@@ -109,7 +111,9 @@ const SignUp = () => {
               value={inputs.gender}
               onChange={handleInputChange}
             >
-              <option value="male">Male</option>
+              <option className="p-4" value="male">
+                Male
+              </option>
               <option value="female">Female</option>
             </select>
           </div>

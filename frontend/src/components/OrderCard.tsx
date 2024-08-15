@@ -2,8 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { OrderTypes } from "../types/types";
 
 const OrderCard = ({ orderItem }: { orderItem: OrderTypes }) => {
-  console.log(orderItem);
-
   const [countdown, setCountdown] = useState<string>("");
 
   const discountedPrice =

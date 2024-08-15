@@ -1,16 +1,18 @@
 import mongoose, { Document, Types } from "mongoose";
 
 export interface AuthTypes {
-  name: string;
+  _id?: mongoose.Types.ObjectId;
+  name?: string;
   username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  gender: "male" | "female";
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+  gender?: "male" | "female";
   profilePic: string;
-  address: AddressTypes;
-  orders: OrderTypes;
+  address?: AddressTypes;
+  orders?: mongoose.Types.ObjectId[];
 }
+
 
 export interface AddressTypes {
   userId?: string;
@@ -32,14 +34,13 @@ export interface ProductTypes {
   title: string;
   description: string;
   price: number;
-  discount: number;
-  discountedPrice: number;
+  discount?: number;
   category: string;
   image: string;
   rating: number;
   availability: boolean;
-  brand: string;
-  dimensions: string;
+  brand?: string;
+  dimensions?: string;
   quantity: number;
 }
 

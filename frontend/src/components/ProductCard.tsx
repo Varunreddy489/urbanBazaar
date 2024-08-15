@@ -31,9 +31,7 @@ const ProductCard = ({
     if (address.length > 0) {
       setUserAddress(address[0]);
     }
-  }, [address]);
-
-
+  }, []);
 
   const handleAddToCart = () => {
     if (user && user._id && product._id) {
@@ -72,16 +70,16 @@ const ProductCard = ({
   const discountedPrice = product.price - priceDifference;
 
   return (
-    <div className="w-80 p-4 bg-neutral-950 text-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
+    <div className="w-full sm:w-80  p-4 bg-neutral-950 text-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
       <img
         className="w-full h-40 object-cover rounded-t-lg"
         alt={product.title}
         src={product.image}
       />
       <div className="p-4">
-        <h2 className="text-xl font-semibold">{product.title}</h2>
-        <div className="flex-row space-y-1">
-          <div className="flex mt-3 space-x-2">
+        <h2 className="text-lg sm:text-xl font-semibold">{product.title}</h2>
+        <div className="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0 mt-3">
+          <div className="flex items-center space-x-2">
             <p className="text-lg font-bold text-yellow-400">
               {priceDifference.toFixed(2)}
             </p>
@@ -91,18 +89,16 @@ const ProductCard = ({
             ${product.price.toFixed(2)}
           </p>
         </div>
-        <div className="flex mt-2 justify-between text-center">
+        <div className="flex flex-col sm:flex-row sm:justify-between mt-2">
           <div className="bg-green-500 w-fit p-1 rounded-md">
             <p>Save up to ${discountedPrice.toFixed(2)}</p>
           </div>
           <div>
-            <p className={`text-sm mb-2 ${availabilityClass}`}>
-              {availabilityText}
-            </p>
+            <p className={`text-sm ${availabilityClass}`}>{availabilityText}</p>
           </div>
         </div>
-        <div className="flex justify-between items-center mt-4">
-          <p className="bg-green-500 px-1.5 py-0.5 rounded-sm text-white flex items-center gap-0.5">
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
+          <p className="bg-green-500 px-2 py-1 rounded-sm text-white flex items-center gap-0.5">
             {product.rating} ★
           </p>
           <button

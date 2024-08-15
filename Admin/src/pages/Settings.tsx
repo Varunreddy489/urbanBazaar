@@ -1,10 +1,11 @@
+import Error from "../components/Error";
 
 const Settings = () => {
   return (
-    <div>
-      
+    <div className="">
+      <Error />
     </div>
-  )
-}
+  );
+};
 
-export default Settings
+export default Settings;
