@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { productModel } from "../models/productModel";
-import { ProductTypes } from "../types/types";
 
-// Adjust the import as necessary
+import { ProductTypes } from "../types/types";
+import { productModel } from "../models/productModel";
+import { CustomResponse } from "../utils/pagination";
 
 export const addProduct = async (req: Request, res: Response) => {
   try {
@@ -67,15 +67,20 @@ export const addProduct = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllProducts = async (req: Request, res: Response) => {
+export const getAllProducts = async (req: Request, res: CustomResponse) => {
   try {
-    const products = await productModel.find();
-    return res.status(200).json(products);
+    if (res.paginatedResults) {
+      return res.status(200).json(res.paginatedResults);
+    } else {
+      const products = await productModel.find();
+      return res.status(200).json(products);
+    }
   } catch (error) {
     console.log("Error in getAllProducts", error);
     res.status(500).json({ error: "Error in fetching" });
   }
 };
+
 
 export const getProduct = async (req: Request, res: Response) => {
   try {
@@ -93,10 +98,7 @@ export const getProduct = async (req: Request, res: Response) => {
   }
 };
 
-export const updateProducts = async (
-  req: Request<any, any, ProductTypes>,
-  res: Response
-) => {
+export const updateProducts = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
@@ -114,10 +116,7 @@ export const updateProducts = async (
   }
 };
 
-export const deleteProducts = async (
-  req: Request<any, any, ProductTypes>,
-  res: Response
-) => {
+export const deleteProducts = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
@@ -136,43 +135,5 @@ export const deleteProducts = async (
   } catch (error) {
     console.log("error in delete products", error);
     return res.status(404).json({ error: "Internal Server Error" });
-  }
-};
-
-export const filterProducts = async (req: Request, res: Response) => {
-  try {
-    const { category, priceMin, priceMax, brand, ratingMin } = req.query;
-
-    const query: any = {};
-
-    if (category) {
-      query.category = category;
-    }
-
-    if (priceMin || priceMax) {
-      query.price = {};
-      if (priceMin) {
-        query.price.$gte = parseFloat(priceMin as string);
-      }
-      if (priceMax) {
-        query.price.$lte = parseFloat(priceMax as string);
-      }
-    }
-
-    if (brand) {
-      query.brand = brand;
-    }
-
-    if (ratingMin) {
-      query.rating = { $gte: parseFloat(ratingMin as string) };
-    }
-
-    // Fetch the filtered products from the database
-    const products = await productModel.find(query);
-
-    return res.status(200).json(products);
-  } catch (error) {
-    console.error("Error in filterProducts:", error);
-    return res.status(500).json({ message: "Internal server error" });
   }
 };

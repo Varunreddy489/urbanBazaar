@@ -45,10 +45,11 @@ export const addOrder = async (req: Request, res: Response) => {
       quantity,
       status,
       totalPrice,
-});
+    });
 
     await newOrder.save();
 
+    user.orders = user.orders || [];
     user.orders.push(newOrder._id);
     await user.save();
 

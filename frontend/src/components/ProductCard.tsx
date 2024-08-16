@@ -31,7 +31,7 @@ const ProductCard = ({
     if (address.length > 0) {
       setUserAddress(address[0]);
     }
-  }, []);
+  }, [address]);
 
   const handleAddToCart = () => {
     if (user && user._id && product._id) {
@@ -50,6 +50,7 @@ const ProductCard = ({
         quantity: 1,
         status: "pending",
         totalPrice: product.price,
+        date: new Date().toISOString(),
       };
 
       console.log(orderData);
@@ -59,10 +60,14 @@ const ProductCard = ({
     }
   };
 
-  const availabilityText = product.availability ? "In Stock" : "Out of Stock";
-  const availabilityClass = product.availability
-    ? "text-green-500"
-    : "text-red-500";
+  // const availabilityText = product.availability ? "In Stock" : "Out of Stock";
+  // const availabilityClass = product.availability
+  //   ? "text-green-500"
+  //   : "text-red-500";
+
+  const availabilityText = product.quantity > 0 ? "In Stock" : "Out of Stock";
+  const availabilityClass =
+    product.quantity > 0 ? "text-green-500" : "text-red-500";
 
   const priceDifference =
     product.price - (product.price * product.discount) / 100;
@@ -70,7 +75,7 @@ const ProductCard = ({
   const discountedPrice = product.price - priceDifference;
 
   return (
-    <div className="w-full sm:w-80  p-4 bg-neutral-950 text-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
+    <div className="w-full sm:w-80 md:w-72 lg:w-80  p-4 bg-neutral-950 text-white rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 ease-in-out">
       <img
         className="w-full h-40 object-cover rounded-t-lg"
         alt={product.title}

@@ -16,9 +16,10 @@ export interface ProductTypes {
   category: string;
   image: string;
   rating: number;
-  availability: boolean;
+  availability?: boolean;
   brand: string;
   dimensions: string;
+  quantity: number
 }
 
 export interface RegisterData {
@@ -74,7 +75,7 @@ export interface AddressTypes {
 
 export interface OrderTypes {
   _id?: string;
-  productId?: ProductTypes;
+  productId?: string;
   userId: string;
   address: AddressTypes;
   quantity: number;

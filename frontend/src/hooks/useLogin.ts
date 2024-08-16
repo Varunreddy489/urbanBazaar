@@ -1,59 +1,64 @@
 import axios from "axios";
-import { useState } from "react"
-import toast from "react-hot-toast"
+import { useState } from "react";
+import toast from "react-hot-toast";
 
-import { LoginData } from '../types/types';
+import { LoginData } from "../types/types";
 import { useAuthContext } from "../context/AuthContext";
 
 const useLogin = () => {
-    const [loading, setLoading] = useState(false)
-    const { setAuthUser } = useAuthContext();
+  const [loading, setLoading] = useState(false);
+  const { setAuthUser } = useAuthContext();
 
+  const login = async ({ email, password }: LoginData) => {
+    const succcess = handleInputErrors({
+      email,
+      password,
+    });
 
-    const login = async ({
-        email, password
-    }: LoginData) => {
-        const succcess = handleInputErrors({
-            email, password
-        })
+    if (!succcess) return;
+    setLoading(true);
 
-        if (!succcess) return;
-        setLoading(true)
+    try {
 
-        try {
-            const response = await axios.post("http://localhost:5000/api/user/login", { email, password });
+      const response = await axios.post(
+        "http://localhost:5000/api/user/login",
+        { email, password },
+        { withCredentials: true }
+      );
 
-            if (response.data.error) {
-                throw new Error(response.data.error);
-            }
+      if (response.data.error) {
+        throw new Error(response.data.error);
+      }
 
-            console.log(response.data);
-            toast.success("Login Completed Successfully");
-            localStorage.setItem("user", JSON.stringify(response.data));
+      console.log(response.data);
+      toast.success("Login Completed Successfully");
+      localStorage.setItem("user", JSON.stringify(response.data));
 
-            setAuthUser(response.data)
-
-        } catch (error) {
-            console.log("error in useLogin", error);
-            if (axios.isAxiosError(error) && error.response && error.response.data) {
-                toast.error(error.response.data.error || "Failed to register. Please try again later.");
-            } else {
-                toast.error("Failed to register. Please try again later.");
-            }
-        } finally {
-            setLoading(false)
-        }
+      setAuthUser(response.data);
+    } catch (error) {
+      console.log("error in useLogin", error);
+      if (axios.isAxiosError(error) && error.response && error.response.data) {
+        toast.error(
+          error.response.data.error ||
+            "Failed to register. Please try again later."
+        );
+      } else {
+        toast.error("Failed to register. Please try again later.");
+      }
+    } finally {
+      setLoading(false);
     }
-    return { loading, login }
-}
+  };
+  return { loading, login };
+};
 
-export default useLogin
+export default useLogin;
 
 function handleInputErrors(data: LoginData) {
-    const { email, password } = data
-    if (!email || !password) {
-        toast.error("Please fill in all fields");
-        return false;
-    }
-    return true
+  const { email, password } = data;
+  if (!email || !password) {
+    toast.error("Please fill in all fields");
+    return false;
+  }
+  return true;
 }

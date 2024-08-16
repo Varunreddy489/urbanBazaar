@@ -10,8 +10,11 @@ const useGetProducts = () => {
   const getProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/api/product");
-      setProducts(response.data);
+      const response = await axios.get(
+        "http://localhost:5000/api/product?page=1&limit=12"
+      );
+      setProducts(response.data.results);
+
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);

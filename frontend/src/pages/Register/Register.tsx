@@ -26,14 +26,14 @@ const SignUp = () => {
 
   const handleClick = async () => {
     await signUp(inputs);
-    setInputs({
-      name: "",
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      gender: "male",
-    });
+    // setInputs({
+    //   name: "",
+    //   username: "",
+    //   email: "",
+    //   password: "",
+    //   confirmPassword: "",
+    //   gender: "male",
+    // });
   };
 
   return (

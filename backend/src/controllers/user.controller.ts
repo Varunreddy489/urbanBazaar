@@ -62,12 +62,13 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
-export const login = async (
-  req: Request<any, any, AuthTypes>,
-  res: Response
-) => {
+export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: "Email and password are required" });
+    }
 
     const user = await userModel.findOne({ email });
 
@@ -96,10 +97,7 @@ export const login = async (
   }
 };
 
-export const logout = async (
-  req: Request<any, any, AuthTypes>,
-  res: Response
-) => {
+export const logout = async (req: Request, res: Response) => {
   try {
     res.cookie("jwt", "", { maxAge: 0 });
     res.status(200).json({ message: "Logged out successfully" });
