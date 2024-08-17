@@ -4,10 +4,12 @@ import { TiShoppingCart } from "react-icons/ti";
 
 import Dropdown from "./Dropdown";
 import Urbanlogo from "/Urbanlogo.svg";
+import { CiSearch } from "react-icons/ci";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -20,11 +22,14 @@ const Navbar = () => {
   const userData = data ? JSON.parse(data) : null;
 
   return (
-    <nav className=" dark:bg-gray-950  relative ">
+    <nav className="dark:bg-gray-950 relative ">
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
-        <a href="/" className="flex items-center space-x-3">
-          <img src={Urbanlogo} className="h-8" alt="UrbanBazaar Logo" />
-        </a>
+        <div className="mr-3 flex-shrink-0 ">
+          <a href="/" className="flex items-center space-x-3">
+            <img src={Urbanlogo} className="h-8" alt="UrbanBazaar Logo" />
+          </a>
+        </div>
+
         <div className="flex flex-grow justify-end items-center md:order-2 space-x-6 rtl:space-x-reverse relative">
           <div className="relative">
             <button
@@ -47,6 +52,8 @@ const Navbar = () => {
             className="text-2xl text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white"
             onClick={handleClick}
           />
+
+          <CiSearch className="text-2xl text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white" />
         </div>
       </div>
     </nav>

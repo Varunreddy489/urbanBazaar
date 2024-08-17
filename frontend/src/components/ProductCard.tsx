@@ -69,6 +69,8 @@ const ProductCard = ({
   const availabilityClass =
     product.quantity > 0 ? "text-green-500" : "text-red-500";
 
+  const isProduct = product.quantity > 0;
+
   const priceDifference =
     product.price - (product.price * product.discount) / 100;
 
@@ -90,10 +92,10 @@ const ProductCard = ({
             </p>
             <p>({product.discount}% off)</p>
           </div>
+        </div>
           <p className="line-through text-slate-500">
             ${product.price.toFixed(2)}
           </p>
-        </div>
         <div className="flex flex-col sm:flex-row sm:justify-between mt-2">
           <div className="bg-green-500 w-fit p-1 rounded-md">
             <p>Save up to ${discountedPrice.toFixed(2)}</p>
@@ -108,11 +110,11 @@ const ProductCard = ({
           </p>
           <button
             className={`bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-              !product.availability ? "opacity-50 cursor-not-allowed" : ""
+              !isProduct ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={handleAddToCart}
-            disabled={cartLoading || !product.availability}
-            aria-label={product.availability ? "Add to Cart" : "Out of Stock"}
+            disabled={cartLoading || !isProduct}
+            aria-label={isProduct ? "Add to Cart" : "Out of Stock"}
           >
             {cartLoading ? "Adding..." : "Add To Cart"}
           </button>

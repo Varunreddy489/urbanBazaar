@@ -12,7 +12,7 @@ const useGetProducts = (page: number) => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/product?page=${page}&limit=12`,
+        `http://localhost:5000/api/product?page=${page}&limit=16`,
         {
           withCredentials: true, // Ensure cookies are included
         }

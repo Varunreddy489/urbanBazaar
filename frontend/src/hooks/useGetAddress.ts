@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 // import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const useGetAddress = () => {
   const { authUser, isLoading: authLoading } = useAuthContext();
@@ -19,11 +20,11 @@ const useGetAddress = () => {
       setAddress(response.data);
     } catch (error) {
       console.log("error in useGetAddress", error);
-    //   if (axios.isAxiosError(error) && error.response && error.response.data) {
-    //     toast.error(error.response.data.error);
-    //   } else {
-    //     toast.error("Failed to register. Please try again later.");
-    //   }
+      if (axios.isAxiosError(error) && error.response && error.response.data) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Failed to register. Please try again later.");
+      }
     } finally {
       setLoading(false);
     }

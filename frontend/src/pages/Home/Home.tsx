@@ -1,11 +1,11 @@
+import SearchBar from "../../components/SearchBar";
 import Products from "./Products";
-// import Footer from "../../components/Footer";
 
 const Home = () => {
   return (
-    <div className="bg-slate-900">
+    <div className="flex flex-col items-center justify-center bg-slate-900">
+      <SearchBar />
       <Products />
-      {/* <Footer /> */}
     </div>
   );
 };

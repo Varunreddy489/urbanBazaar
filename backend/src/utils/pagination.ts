@@ -116,8 +116,6 @@ interface PaginatedResultsResponse<T> {
 const PaginatedResults = (model: any) => {
   return async (req: Request, res: CustomResponse, next: NextFunction) => {
     try {
-      console.log("req.query:", req.query);
-
       const page = req.query.page ? parseInt(req.query.page as string, 10) : 1;
       const limit = req.query.limit
         ? parseInt(req.query.limit as string, 10)
@@ -127,11 +125,7 @@ const PaginatedResults = (model: any) => {
       const endIndex = page * limit;
 
       const totalCount = await model.countDocuments();
-      const results = await model
-        .find()
-        .limit(limit)
-        .skip(startIndex)
-        .exec();
+      const results = await model.find().limit(limit).skip(startIndex).exec();
 
       const paginatedResults: PaginatedResultsResponse<any> = { results };
 

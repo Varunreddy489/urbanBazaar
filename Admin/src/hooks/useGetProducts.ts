@@ -11,7 +11,7 @@ const useGetProducts = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/product?page=1&limit=12"
+        "http://localhost:5000/api/product?page=1&limit=16"
       );
       setProducts(response.data.results);
 
